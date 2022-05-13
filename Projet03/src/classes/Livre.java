@@ -15,8 +15,6 @@ public class Livre extends Volume{
 	private int nombreDisponible;
 	
 	
-	
-	
 	/**
 	 * @return the annee
 	 */
