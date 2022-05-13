@@ -1,6 +1,6 @@
-/* Fichier Volume.java
+/* Fichier Document.java
  * Auteur : rebec
- * Date de création : May 9, 2022
+ * Date de création : May 13, 2022
  */
 package classes;
 
@@ -8,12 +8,12 @@ package classes;
  *  TODO
  * Author : Prénom, nom
  */
-public class Volume {
+public class Document {
 
-	protected String autheur;
-	
-	
-	public Volume() {
+	/**
+	 * 
+	 */
+	public Document() {
 		// TODO Auto-generated constructor stub
 	}
 

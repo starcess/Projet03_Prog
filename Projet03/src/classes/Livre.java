@@ -15,6 +15,14 @@ public class Livre extends Volume{
 	private int nombreDisponible;
 	
 	
+	@Override
+	public String toString() {
+		String msg = getClass().getSimpleName() + "\t" + "super.getCode"  ;
+		
+		return msg;
+	}
+	
+	
 	/**
 	 * @return the annee
 	 */
