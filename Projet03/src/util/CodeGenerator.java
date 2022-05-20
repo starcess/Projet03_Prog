@@ -78,6 +78,9 @@ public class CodeGenerator {
 		 */
 		
 		String returnCode = "";
+		returnCode = generateCodeLetter(autheur) + "-";
+		returnCode += customHash(titre, longueurCode);
+		returnCode += customHash(Integer.toString(longueurCode), longueurPrefixe);
 		return returnCode;
 	}
 	

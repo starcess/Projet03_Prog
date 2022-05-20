@@ -10,11 +10,40 @@ package classes;
  */
 public class BD extends Volume{
 
+	protected int numEdition;
+	
+	@Override
+	public String toString() {
+		String msg = super.toString() + ",\t" + this.numEdition;
+		return msg;
+	}
+	
+	
+	//Getters, setters and Constructor
+	/**
+	 * @return the numEdition
+	 */
+	public int getNumEdition() {
+		return numEdition;
+	}
+
+	/**
+	 * @param numEdition the numEdition to set
+	 */
+	public void setNumEdition(int numEdition) {
+		this.numEdition = numEdition;
+	}
+
 	/**
 	 * 
 	 */
 	public BD() {
-		// TODO Auto-generated constructor stub
+		super();
+	}
+	
+	public BD(int numEdition1) {
+		this();
+		setNumEdition(numEdition1);
 	}
 
 }

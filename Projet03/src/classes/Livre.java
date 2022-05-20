@@ -9,16 +9,16 @@ package classes;
  * Author : Prénom, nom
  */
 public class Livre extends Volume{
-	private int annee;
-	private Genre genre;
-	private int nombreTotal;
-	private int nombreDisponible;
+	protected int annee;
+	protected Genre genre;
+	protected int nombreTotal;
+	protected int nombreDisponible;
 	
 	
 	@Override
 	public String toString() {
-		String msg = getClass().getSimpleName() + "\t" + "super.getCode"  ;
-		
+		String msg = super.toString() + ",\t" + this.annee + ",\t" +
+					  this.genre + ",\t" + this.nombreDisponible + "/" + this.nombreTotal;
 		return msg;
 	}
 	
