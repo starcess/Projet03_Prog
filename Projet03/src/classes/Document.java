@@ -4,6 +4,8 @@
  */
 package classes;
 
+import util.CodeGenerator;
+
 /**
  *  TODO
  * Author : Prénom, nom
@@ -44,6 +46,21 @@ public class Document implements Comparable<Document>  {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	
+	
+	public void setCode(Document o) {
+		if(o.getClass().equals(Livre.class)) {
+			Livre livre = (Livre) o;
+			this.code = CodeGenerator.generateLivreCode(livre.titre, livre.autheur, livre.annee, 5, 2);
+		}else if(o.getClass().equals(BD.class)) {
+			BD bd = (BD) o;
+			this.code = CodeGenerator.generateBDCode(bd.titre, bd.autheur, bd.numEdition, 5, 2);
+		}else if(o.getClass().equals(Journal.class)) {
+			Journal journal = (Journal) o;
+			this.code = CodeGenerator.generateJournalCode(journal.titre, journal.getDateParution(), journal.annee, 5, 2);
+		}
+	}
+
 
 	/**
 	 * @return the categorie

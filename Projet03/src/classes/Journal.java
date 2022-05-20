@@ -13,6 +13,7 @@ import java.util.Date;
 public class Journal extends Document {
 
 	protected Date dateParution;
+	protected int annee;
 	
 	@Override
 	public String toString() {

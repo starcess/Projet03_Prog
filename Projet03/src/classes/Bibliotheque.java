@@ -14,7 +14,80 @@ public class Bibliotheque {
 
 	protected String nomBibliotheque = "Bibliothèque Ahuntsic";
 	protected final int MAX = 500;
-	protected ArrayList <Document> documents;
+	protected ArrayList <Document> listeDocuments;
+	
+	
+	//Methods
+	
+	/**
+	 * L’ajout d'un nouveau document à la collection de documents.
+	 * Au cas où il n’y a plus de place pour le document 
+	 * (si on dépasse la capacité de la bibliothèque), on doit lever une exception.
+	 * @param document
+	 */
+	public void ajouter(Document document) {
+		if (Document.getNbDocument() <= MAX) {
+			listeDocuments.add(document);
+		}	
+	}
+	
+	/**
+	 * Supprimer un document: 
+	 * La suppression d'un document de la collection de documents.  
+	 * @param code
+	 */
+	
+	public void suppression(String code){
+		int index;
+		for(Document o : listeDocuments) {
+			if(o.code.equalsIgnoreCase(code) && (o != null)) {
+				index = rechercheCode(code);
+				listeDocuments.remove(index);
+			}
+		}
+	}
+	
+	/**
+	 * La recherche d'un document par code
+	 * @param code
+	 * @return
+	 */
+	public int rechercheCode(String code) {
+		int pos = -1;
+		if(code.isBlank() == false ) {
+			for(int i = 0; i <= MAX; i++) {
+				if ((listeDocuments.get(i)!= null) && listeDocuments.get(i).code.equalsIgnoreCase(code)) {
+					pos = i;
+				}
+			}
+		}
+		return pos;
+	}
+	
+	/**
+	 * La recherche d'un document par titre
+	 * @param titre
+	 * @return
+	 */
+	public int rechercheTitre(String titre) {
+		int pos = -1;
+		if(titre.isBlank() == false ) {
+			for(int i = 0; i <= MAX; i++) {
+				if ((listeDocuments.get(i)!= null) && listeDocuments.get(i).titre.equalsIgnoreCase(titre)) {
+					pos = i;
+				}
+			}
+		}
+		return pos;
+	}
+	
+	
+	public Document obtention(int position) {
+		Document memoire = listeDocuments.get(position);
+		return memoire;
+	}
+	
+	
 	
 	
 	
