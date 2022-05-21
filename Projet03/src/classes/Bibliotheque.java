@@ -80,14 +80,16 @@ public class Bibliotheque {
 		return pos;
 	}
 	
-	
+	/**
+	 * 
+	 * @param position
+	 * @return
+	 */
 	public Document obtention(int position) {
 		Document memoire = listeDocuments.get(position);
 		return memoire;
 	}
-	
-	
-	
+		
 	/**
 	 * Seuls les livres peuvent être empruntés.
 	 * Un ajustement du nombre de copies disponibles doit être effectué selon les prêts et les retours.
@@ -116,9 +118,7 @@ public class Bibliotheque {
 			throw new Exception(msg);
 		}
 	}
-	
-	
-	
+		
 	/**
 	 * Seuls les livres peuvent être empruntés.
 	 * Un ajustement du nombre de copies disponibles doit être effectué selon les prêts et les retours.
@@ -155,35 +155,72 @@ public class Bibliotheque {
 	 * a.compareTo(b) < 0 pour a strictement inférieur à b
 	 * a.compareTo(b) > 0 pour a strictement supérieur à b 
 	 */
-	public void trier() {
+	public ArrayList <Document> trier(ArrayList <Document> listeDocuments1) {
 		int result = -1;
 		Document temporaire;
 		
-		for (int i = 0; i < listeDocuments.size() ; i++) {
-			if(listeDocuments.get(i) != null) {
-				for(int j = i+1; j < listeDocuments.size(); j++) {
-					if(listeDocuments.get(j) != null) {
-						result =listeDocuments.get(i).compareTo(listeDocuments.get(j));    
+		for (int i = 0; i < listeDocuments1.size() ; i++) {
+			if(listeDocuments1.get(i) != null) {
+				for(int j = i+1; j < listeDocuments1.size(); j++) {
+					if(listeDocuments1.get(j) != null) {
+						result =listeDocuments1.get(i).compareTo(listeDocuments.get(j));    
 						if (result > 0) {
-							temporaire = listeDocuments.get(i);
-							listeDocuments.set(i, listeDocuments.get(j));
-							listeDocuments.set(j, temporaire);
-							//listeDocuments.get(i) = listeDocuments.get(j);
-							//listeDocuments.get(j) = memory;
+							temporaire = listeDocuments1.get(i);
+							listeDocuments1.set(i, listeDocuments1.get(j));
+							listeDocuments1.set(j, temporaire);
 						}					
 					}//fin if(listeDocuments.get(j) != null) {
 				}//fin inside for j			
 			}//fin if (listeDocuments.get(i) != null)
-		}//fin outside for i		
+		}//fin outside for i	
+		return listeDocuments1;
 	}//fin méthode
 	
 	
+	public void sauvegardeBinaire(ArrayList<Document> listeDocuments1) {
+		
+	}
+	
+	public void sauvegardeJson(ArrayList<Document> listeDocuments1) {
+		
+	}
+	
+	
+	public void chargementBinaire(ArrayList<Document> listeDocuments1) {
+		
+	}
+	
+	public void chargementJson(ArrayList<Document> listeDocuments1) {
+		
+	}
+	
+	/**
+	 * Afficher la liste triée des livres 
+	 * @param listeDocuments1
+	 * @return
+	 */
+	public String afficherListeLivres(ArrayList<Document> listeDocuments1) {
+		String msg = "";
+		this.trier(listeDocuments1);
+		for(int i = 0 ; i < listeDocuments1.size(); i++ ){
+			if(listeDocuments1.get(i) instanceof Livre) {
+				msg += listeDocuments1.get(i) + "\n";
+			}
+		}
+		return msg;
+	}
+	
+	
+	
+	/**
+	 * Afficher la liste triée des documents de la bibliothèque
+	 */
 	@Override
 	public String toString() {
-		this.trier();
+		this.trier(this.listeDocuments);
 		String msg ="";
 		for(Document o : listeDocuments) {
-			msg += o.toString();
+			msg += o.toString() + "\n";
 		}
 		return msg;
 	}
@@ -232,7 +269,7 @@ public class Bibliotheque {
 	 * 
 	 */
 	public Bibliotheque() {
-		
+		//this(String nom);
 	}
 	
 	public Bibliotheque(String nom) {

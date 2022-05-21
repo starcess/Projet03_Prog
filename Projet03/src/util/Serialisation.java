@@ -4,6 +4,8 @@
  */
 package util;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,8 +29,7 @@ import classes.Document;
  */
 public class Serialisation {
 	
-									//Sérialisation json
-		
+									//Sérialisation json		
 	/**
 	 * 
 	 * @param documents
@@ -85,7 +86,6 @@ public class Serialisation {
 	}//fin méthode
 	
 	
-	
 	/**
 	 * 
 	 * @param path
@@ -105,4 +105,47 @@ public class Serialisation {
 				return docs;
 			}
 	}//fin deSerialise //fin methode	
+
+
+	
+									//Sérialisation Binaire
+	/**
+	 * 
+	 * @param listesDocuments
+	 * @param path
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static void objetToXML(ArrayList <Document> listesDocuments, String path) throws FileNotFoundException, IOException{
+		try (
+				//Ouvre le fichier en ecriture
+				FileOutputStream fos = new FileOutputStream(path);
+				XMLEncoder encodeur = new XMLEncoder(fos);   )
+		{
+			//serialiser l'objet(s)
+			encodeur.writeObject(listesDocuments);
+
+		}
+	}
+
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static  ArrayList <Document> xmlToObjet(String path) throws FileNotFoundException, IOException {	
+		try (XMLDecoder decodeur = new XMLDecoder(new FileInputStream(path)))
+
+		{
+			ArrayList <Document> listesDocuments = new ArrayList();
+			//déserialiser tab
+			listesDocuments = (ArrayList <Document>) decodeur.readObject();
+			return listesDocuments;
+		}
+
+	}
+
+
 }
