@@ -6,8 +6,6 @@ package classes;
 
 import java.util.Objects;
 
-import util.CodeGenerator;
-
 /**
  *  TODO
  * Author : Prénom, nom
@@ -19,7 +17,7 @@ public class Document implements Comparable<Document>  {
 	protected String titre;
 	protected static int nbDocument;
 	
-	
+	//Methods
 	@Override
 	public String toString() {
 		String msg = getClass().getSimpleName() + ",\t" + " : " + ",\t" + this.titre + ",\t" + this.code;
@@ -34,13 +32,11 @@ public class Document implements Comparable<Document>  {
 		int result = (this.getClass().getSimpleName() + this.getCode()).compareTo(o.getClass().getSimpleName() + o.getCode());  
 		return result;
 	}
-	
-	
+		
 	@Override
 	public int hashCode() {
 		return Objects.hash(categorie, code, titre);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -58,6 +54,7 @@ public class Document implements Comparable<Document>  {
 	}
 
 
+	
 	//Getters, setters and Constructors
 	/**
 	 * @return the code
@@ -73,21 +70,6 @@ public class Document implements Comparable<Document>  {
 		this.code = code;
 	}
 	
-	
-	public void setCode(Document o) {
-		if(o.getClass().equals(Livre.class)) {
-			Livre livre = (Livre) o;
-			this.code = CodeGenerator.generateLivreCode(livre.titre, livre.autheur, livre.annee, 5, 2);
-		}else if(o.getClass().equals(BD.class)) {
-			BD bd = (BD) o;
-			this.code = CodeGenerator.generateBDCode(bd.titre, bd.autheur, bd.numEdition, 5, 2);
-		}else if(o.getClass().equals(Journal.class)) {
-			Journal journal = (Journal) o;
-			this.code = CodeGenerator.generateJournalCode(journal.titre, journal.getDateParution(), journal.annee, 5, 2);
-		}
-	}
-
-
 	/**
 	 * @return the categorie
 	 */
@@ -102,8 +84,6 @@ public class Document implements Comparable<Document>  {
 		this.categorie = categorie;
 	}
 	
-
-
 	/**
 	 * @return the titre
 	 */
@@ -111,14 +91,12 @@ public class Document implements Comparable<Document>  {
 		return titre;
 	}
 
-
 	/**
 	 * @param titre the titre to set
 	 */
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
-
 
 	/**
 	 * @return the nbDocument
@@ -134,11 +112,17 @@ public class Document implements Comparable<Document>  {
 		nbDocument++;
 	}
 	
+	/**
+	 * 
+	 * @param code1
+	 * @param categorie1
+	 * @param titre1
+	 */
 	public Document(String code1, String categorie1, String titre1) {
 		this();
 		setTitre(titre1);
 		setCategorie(categorie);
-		//Missing code generator
+		setCode(code1);
 	}
 	
 	

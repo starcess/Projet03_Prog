@@ -4,6 +4,8 @@
  */
 package classes;
 
+import util.CodeGenerator;
+
 /**
  *  TODO
  * Author : Prénom, nom
@@ -44,6 +46,7 @@ public class BD extends Volume{
 	public BD(int numEdition1) {
 		this();
 		setNumEdition(numEdition1);
+		super.code = CodeGenerator.generateBDCode(titre, autheur, numEdition1, 5, 2);
 	}
 
 }

@@ -6,6 +6,8 @@ package classes;
 
 import java.util.Date;
 
+import util.CodeGenerator;
+
 /**
  *  TODO
  * Author : Prénom, nom
@@ -47,6 +49,8 @@ public class Journal extends Document {
 	
 	public Journal(Date dateParution1) {
 		this();	
+		this.annee = dateParution1.getYear();
+		super.code = CodeGenerator.generateJournalCode(titre, dateParution1, annee, 5,2);
 		setDateParution(dateParution1);
 	}
 

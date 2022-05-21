@@ -4,6 +4,8 @@
  */
 package classes;
 
+import util.CodeGenerator;
+
 /**
  *  TODO
  * Author : Prénom, nom
@@ -81,11 +83,12 @@ public class Livre extends Volume{
 
 	
 	public Livre() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 	
 	public Livre(int annee1, Genre g, int nbTotal, int nbDispo) {
-		super();
+		this();
+		super.code = CodeGenerator.generateLivreCode(titre, autheur, annee1, 5, 2);
 		setAnnee(annee1);
 		setGenre(g);
 		setNombreTotal(nbTotal);
