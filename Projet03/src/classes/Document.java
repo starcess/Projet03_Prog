@@ -4,6 +4,8 @@
  */
 package classes;
 
+import java.util.Objects;
+
 import util.CodeGenerator;
 
 /**
@@ -25,13 +27,37 @@ public class Document implements Comparable<Document>  {
 	}
 
 	
+	//Compare, equals and hashcode
 	@Override
 	public int compareTo(Document o) {
-		// TODO Auto-generated method stub
-		return 0;
+		//int test = this.getClass().compareTo(o.getClass());
+		int result = (this.getClass().getSimpleName() + this.getCode()).compareTo(o.getClass().getSimpleName() + o.getCode());  
+		return result;
 	}
 	
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(categorie, code, titre);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Document other = (Document) obj;
+		return (categorie == other.categorie) && Objects.equals(code, other.code) && Objects.equals(titre, other.titre);
+	}
+
+
 	//Getters, setters and Constructors
 	/**
 	 * @return the code
@@ -106,6 +132,13 @@ public class Document implements Comparable<Document>  {
 	 */
 	public Document() {
 		nbDocument++;
+	}
+	
+	public Document(String code1, String categorie1, String titre1) {
+		this();
+		setTitre(titre1);
+		setCategorie(categorie);
+		//Missing code generator
 	}
 	
 	
