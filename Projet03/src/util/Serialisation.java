@@ -108,7 +108,7 @@ public class Serialisation {
 
 
 	
-									//Sérialisation Binaire
+									//Sérialisation XML
 	/**
 	 * 
 	 * @param listesDocuments
@@ -116,7 +116,7 @@ public class Serialisation {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private static void objetToXML(ArrayList <Document> listesDocuments, String path) throws FileNotFoundException, IOException{
+	public static void objetToXML(ArrayList <Document> listesDocuments, String path) throws FileNotFoundException, IOException{
 		try (
 				//Ouvre le fichier en ecriture
 				FileOutputStream fos = new FileOutputStream(path);
@@ -135,7 +135,7 @@ public class Serialisation {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private static  ArrayList <Document> xmlToObjet(String path) throws FileNotFoundException, IOException {	
+	public static  ArrayList <Document> xmlToObjet(String path) throws FileNotFoundException, IOException {	
 		try (XMLDecoder decodeur = new XMLDecoder(new FileInputStream(path)))
 
 		{

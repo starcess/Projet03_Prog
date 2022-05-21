@@ -4,7 +4,11 @@
  */
 package classes;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import util.Serialisation;
 
 /**
  *  TODO
@@ -176,22 +180,79 @@ public class Bibliotheque {
 		return listeDocuments1;
 	}//fin méthode
 	
-	
-	public void sauvegardeBinaire(ArrayList<Document> listeDocuments1) {
-		
+	/**
+	 * 
+	 * @param listeDocuments1
+	 * @param path
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void sauvegardeBinaire(ArrayList<Document> listeDocuments1, String path) throws FileNotFoundException, IOException {
+		Serialisation.objetToBinaire(listeDocuments1, path);
 	}
 	
-	public void sauvegardeJson(ArrayList<Document> listeDocuments1) {
-		
+	
+	/**
+	 * 
+	 * @param listeDocuments1
+	 * @param path
+	 * @throws IOException
+	 */
+	public void sauvegardeJson(ArrayList<Document> listeDocuments1, String path) throws IOException {
+		Serialisation.objectToJson(listeDocuments1, path);
 	}
 	
 	
-	public void chargementBinaire(ArrayList<Document> listeDocuments1) {
-		
+	/**
+	 * 
+	 * @param listeDocuments1
+	 * @param path
+	 * @throws IOException
+	 */
+	public void sauvegardeXml(ArrayList<Document> listeDocuments1, String path) throws IOException {
+		Serialisation.objetToXML(listeDocuments1, path);
 	}
 	
-	public void chargementJson(ArrayList<Document> listeDocuments1) {
+	
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public ArrayList<Document> chargementBinaire(String path) throws ClassNotFoundException, IOException {
+		ArrayList<Document> listeDocuments1 = new ArrayList();
+		listeDocuments1 = Serialisation.binaireToObjet(path);
+		return listeDocuments1;
+	}
+	
+	
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
+	public ArrayList<Document> chargementJson(String path) throws IOException {
+		ArrayList<Document> listeDocuments1 = new ArrayList();
+		listeDocuments1 = Serialisation.jsonToObject(path);
+		return listeDocuments1;
 		
+	}	
+	
+	
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public ArrayList<Document> chargementXml(String path) throws ClassNotFoundException, IOException {
+		ArrayList<Document> listeDocuments1 = new ArrayList();
+		listeDocuments1 = Serialisation.xmlToObjet(path);
+		return listeDocuments1;
 	}
 	
 	/**
