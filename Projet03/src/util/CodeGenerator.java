@@ -1,7 +1,5 @@
 package util;
 
-import java.util.Date;
-
 /** Classe utilitaire pour generer le code d'un document
  *	a partir de ses informations
  */
@@ -14,13 +12,13 @@ public class CodeGenerator {
 	 * sa date de parution("aaaa-mm-jj"), l'année(aaaa)
 	 * , longueur code(5), longueur du préfixe(2)
 	 * @param titre
-	 * @param dateParution
+	 * @param dateParution1
 	 * @param annee
 	 * @param longueurCode
 	 * @param longueurPrefixe
 	 * @return
 	 */
-	public static String generateJournalCode(String titre, Date dateParution, int annee,  int longueurCode, int longueurPrefixe) {	
+	public static String generateJournalCode(String titre, String dateParution1, int annee,  int longueurCode, int longueurPrefixe) {	
 		/*
 		 returnCode += generateCodeLetter(auteur) + "-";
 		 returnCode += CustomHash(titre, longueurTitre) + "-";
@@ -28,7 +26,7 @@ public class CodeGenerator {
 		 */
 		
 		String returnCode = ""; // String qui contiendra le code final
-		returnCode = generateCodeLetter(titre) + "-";
+		returnCode = generateCodeLetter(dateParution1) + "-";
 		returnCode += customHash(titre, longueurCode) + "-";
 		returnCode += customHash(Integer.toString(annee), longueurPrefixe);
 		return returnCode;
@@ -54,7 +52,7 @@ public class CodeGenerator {
 		
 		String returnCode = "";
 		returnCode = generateCodeLetter(autheur) + "-";
-		returnCode = customHash(titre, longueurCode);
+		returnCode = customHash(titre, longueurCode) + "-";
 		returnCode = customHash(Integer.toString(numEdition), longueurPrefixe);
 		return returnCode;
 	}
@@ -79,8 +77,8 @@ public class CodeGenerator {
 		
 		String returnCode = "";
 		returnCode = generateCodeLetter(autheur) + "-";
-		returnCode += customHash(titre, longueurCode);
-		returnCode += customHash(Integer.toString(longueurCode), longueurPrefixe);
+		returnCode += customHash(titre, longueurCode)+ "-";
+		returnCode += customHash(Integer.toString(anneeEdition), longueurPrefixe);
 		return returnCode;
 	}
 	

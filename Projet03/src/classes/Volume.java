@@ -38,8 +38,12 @@ public class Volume extends Document {
 		super();
 	}
 	
-	public Volume(String autheur1) {
-		this();
+	public Volume(String code1, String categorie1, String titre1) {
+		super(code1, categorie1, titre1);
+	}
+	
+	public Volume(String code1, String categorie1, String titre1, String autheur1) {
+		this(code1, categorie1, titre1);
 		setAutheur(autheur1);
 	}
 

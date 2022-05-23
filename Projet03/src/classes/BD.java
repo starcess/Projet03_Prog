@@ -16,7 +16,7 @@ public class BD extends Volume{
 	
 	@Override
 	public String toString() {
-		String msg = super.toString() + ",\t" + this.numEdition;
+		String msg = super.toString() + ",\t" +  "Edition : " + this.numEdition;
 		return msg;
 	}
 	
@@ -43,10 +43,15 @@ public class BD extends Volume{
 		super();
 	}
 	
-	public BD(int numEdition1) {
-		this();
+	public BD(String code1, String categorie1, String titre1, String autheur1) {
+		super(code1, categorie1, titre1, autheur1);		
+	}
+	
+	public BD(String code1, String categorie1, String titre1, String autheur1, int numEdition1) {
+		this(code1, categorie1, titre1, autheur1);	
+		super.code = CodeGenerator.generateBDCode(titre1, autheur1, numEdition1, 5, 2);
+		super.categorie = Categorie.BD;
 		setNumEdition(numEdition1);
-		super.code = CodeGenerator.generateBDCode(titre, autheur, numEdition1, 5, 2);
 	}
 
 }

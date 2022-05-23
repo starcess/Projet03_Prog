@@ -81,18 +81,25 @@ public class Livre extends Volume{
 		this.nombreDisponible = nombreDisponible;
 	}
 
-	
+	//Constructor
 	public Livre() {
 		super();
 	}
 	
-	public Livre(int annee1, Genre g, int nbTotal, int nbDispo) {
-		this();
+	
+	public Livre(String code1, String categorie1, String titre1, String autheur1) {
+		super(code1, categorie1, titre1, autheur1);
+	}
+	
+	
+	public Livre(String code1, String categorie1, String titre1, String autheur1, int annee1, Genre g, int nbTotal) {		
+		this(code1, categorie1, titre1, autheur1);
 		super.code = CodeGenerator.generateLivreCode(titre, autheur, annee1, 5, 2);
+		super.categorie = Categorie.LIVRE;
 		setAnnee(annee1);
 		setGenre(g);
 		setNombreTotal(nbTotal);
-		setNombreDisponible(nbDispo);
+		setNombreDisponible(nbTotal);
 	}
 
 }

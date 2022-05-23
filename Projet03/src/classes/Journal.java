@@ -4,7 +4,7 @@
  */
 package classes;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import util.CodeGenerator;
 
@@ -14,7 +14,7 @@ import util.CodeGenerator;
  */
 public class Journal extends Document {
 
-	protected Date dateParution;
+	protected String dateParution;
 	protected int annee;
 	
 	@Override
@@ -28,14 +28,14 @@ public class Journal extends Document {
 	/**
 	 * @return the dateParution
 	 */
-	public Date getDateParution() {
+	public String getDateParution() {
 		return dateParution;
 	}
 
 	/**
 	 * @param dateParution the dateParution to set
 	 */
-	public void setDateParution(Date dateParution) {
+	public void setDateParution(String dateParution) {
 		this.dateParution = dateParution;
 	}
 
@@ -47,11 +47,20 @@ public class Journal extends Document {
 		super();
 	}
 	
-	public Journal(Date dateParution1) {
-		this();	
-		this.annee = dateParution1.getYear();
-		super.code = CodeGenerator.generateJournalCode(titre, dateParution1, annee, 5,2);
+	
+	public Journal(String code1, String categorie1, String titre1) {
+		super(code1, categorie1, titre1);
+	}
+	
+	
+	public Journal(String code1, String categorie1, String titre1, String dateParution1) {
+		this(code1, categorie1, titre1);	
 		setDateParution(dateParution1);
+		//this.annee = String.valueOf(dateParution1.getYear());
+		LocalDate date = LocalDate.parse(this.dateParution);
+		this.annee = date.getYear();
+		super.code = CodeGenerator.generateJournalCode(titre, dateParution1, annee, 5,2);	
+		super.categorie = Categorie.JOURNAL;
 	}
 
 }

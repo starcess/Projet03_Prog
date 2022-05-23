@@ -315,7 +315,8 @@ public class Bibliotheque {
 	 * @param listeDocuments the listeDocuments to set
 	 */
 	public void setListeDocuments(ArrayList<Document> listeDocuments) {
-		this.listeDocuments = listeDocuments;
+		//this.listeDocuments = listeDocuments;
+		listeDocuments = new ArrayList();
 	}
 
 	/**
@@ -331,10 +332,17 @@ public class Bibliotheque {
 	 */
 	public Bibliotheque() {
 		//this(String nom);
+		setListeDocuments(listeDocuments);
 	}
 	
+	
+	/**
+	 * 
+	 * @param nom
+	 */
 	public Bibliotheque(String nom) {
-		setNomBibliotheque(nom);
+		this();
+		setNomBibliotheque(nom);	
 	}
 
 }

@@ -6,6 +6,7 @@ package util;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,10 +18,14 @@ import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
 
 import com.google.gson.Gson;
 
 import classes.Document;
+import classes.Genre;
+import classes.Livre;
 
 
 /**
@@ -146,6 +151,51 @@ public class Serialisation {
 		}
 
 	}
+	
+									//Sérialisation TXT
+	public static ArrayList<Document> fichiertoObject(String path) {
+		String ligne = "";
+		ArrayList<Document> listeDocuments1 = new ArrayList();
+		//int i = Document.getNbDocument();
+
+		// utilisation de try-with
+		try (FileReader fr = new FileReader(path); // ouvrir fichier en lecture
+				BufferedReader br = new BufferedReader(fr);) {
+
+			while (br.ready()  /*&& (i < l.length )*/ ) { // tant que pas fin de fichier
+				// Lire une ligne de texte
+				ligne = br.readLine();
+
+				if(ligne != null) {
+					// Extraire les données de la ligne
+					StringTokenizer str = new StringTokenizer(ligne, "[\t]");
+						String titre = str.nextToken();
+						String autheur = str.nextToken();
+						int annee = Integer.parseInt(str.nextToken());
+						String genreString = str.nextToken().toUpperCase();
+						Genre g = Genre.valueOf(genreString);
+						int nbCopieTotal = Integer.parseInt(str.nextToken());
+												
+						Document l = new Livre (null, "Livre", titre, autheur, annee, g, nbCopieTotal);
+						listeDocuments1.add(l); 
+						//i = Document.getNbDocument();	
+				    }
+				
+			} // fin while
+
+		} catch (NumberFormatException e) {
+			System.out.println("Erreur d'année ou de nombre de copies totals disponible");
+		} catch (FileNotFoundException e) {
+			System.out.println("Erreur : fichier non trouvé");
+		}
+
+		catch (IOException e) {
+			System.out.println("Erreur de lecture du fichier");
+		} catch (NoSuchElementException e) {
+			System.out.println("Données invalides");
+		}
+		return listeDocuments1;
+	}//fin méthode
 
 
 }

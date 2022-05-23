@@ -4,37 +4,3 @@ La Reine des damnes	Anne Rice	1988	ROMAN	1
 Liaison dangereuses	Choderlos de Laclos	1782	ROMAN	2
 Of Mice and Men	John SteinBeck	2002	ROMAN	1
 Big java	Car S. Horstmann	1991	TECHNIQUE	3
-Lestat le vampire	Anne Rice	1988	FICTION	1
-RTFM : Red Team Field Manual	Ben Clark	2004	TECHNIQUE	1
-Dracula	Bram Stocker	1897	FICTION	2
-Le jour des fourmis	Bernard Werber	1992	ROMAN	1
-La Revolution des fourmis	Bernard Werber	1996	ROMAN	5
-Entretien avec un vampire	Anne Rice	1976	FICTION	1
-Les Fourmis	Bernard Werber	1991	ROMAN	3
-L'Empire des anges	Bernard Werber	2000	ROMAN	4
-Les Fleurs du mal	Charles Baudelaire	1857	ROMAN	3
-Le Petit Prince	Antoine de saint-Exupery	1943	ROMAN	1
-The Hitchhiker`s Guide to the Galaxy	Douglas Adams	1995	ROMAN	2
-Da Vinci Code	Dan Brown	2006	ROMAN	1
-Cyrano de Bergerac	Edmond Rostand	1897	ROMAN	1
-Crime and Punishement	Fyodor Dostoyevsky	2002	ROMAN	1
-The Great Gatsby	F. Scott Fitzgerald	2004	ROMAN	1
-Madame Bovary	Gustave Flaubert	1857	ROMAN	0
-Hacking : The Art of Exploitation	Jon Erickson	2008	TECHNIQUE	1
-The Fault in our Stars	John Green	2012	FICTION	2
-Harry Potter And the Sorcerer's Stone	J.K. Rowling	2001	FICTION	3
-Harry Potter And the Prisoner of Azkhaban	J.K. Rowling	2004	FICTION	3
-Harry Potter and the Order of the Phoenix	J.K. Rowling	2003	FICTION	3
-Harry Potter and the Deathly Hallows	J.K. Rowling	2007	FICTION	3
-Harry Potter and the Goblet of Fire	J.K. Rowling	2000	FICTION	3
-Harry Potter and the Half Blood Prince	J.K. Rowling	2005	FICTION	3
-Harry Potter And the Chamber of Secrets	J.K. Rowling	2003	FICTION	3
-Guide To Assembly Language Programming in Linux	P. Dandamudi	2005	TECHNIQUE	1
-Le Passager	Patrick Senecal	1995	ROMAN	1
-Hell.com	Patrick Senecal	2009	ROMAN	3/3
-Lord of the Rings : The Two Towers	J.R.R. Tolkiens	1954	FICTION	5
-Lord of the Rings : The Fellowship of the Ring	J.R.R. Tolkien	1955	FICTION	5
-Lord of the Rings : The Return of the King	J.R.R. Tolkien	1956	FICTION	4
-Le Simarilliom	J.R.R. Tolkien	1977	ROMAN	1
-The Hobbit	J.R.R. Tolkien	1937	ROMAN	2
-Voyage au bout de la nuit	Louis-Ferdinant Celine	1932	ROMAN	1

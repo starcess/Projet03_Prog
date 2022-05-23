@@ -20,7 +20,7 @@ public class Document implements Comparable<Document>  {
 	//Methods
 	@Override
 	public String toString() {
-		String msg = getClass().getSimpleName() + ",\t" + " : " + ",\t" + this.titre + ",\t" + this.code;
+		String msg = getClass().getSimpleName() + "\t" + " : " + "\t" +  this.code + "\t" + this.titre ;
 		return msg;
 	}
 
