@@ -260,12 +260,12 @@ public class Bibliotheque {
 	 * @param listeDocuments1
 	 * @return
 	 */
-	public String afficherListeLivres(ArrayList<Document> listeDocuments1) {
-		String msg = "";
-		this.trier(listeDocuments1);
-		for(int i = 0 ; i < listeDocuments1.size(); i++ ){
-			if(listeDocuments1.get(i) instanceof Livre) {
-				msg += listeDocuments1.get(i) + "\n";
+	public String afficherListeLivres() {
+		String msg = "Liste triés des livres: \n";
+		this.trier(this.listeDocuments);
+		for(int i = 0 ; i < this.listeDocuments.size(); i++ ){
+			if(this.listeDocuments.get(i) instanceof Livre) {
+				msg += this.listeDocuments.get(i) + "\n";
 			}
 		}
 		return msg;
@@ -279,7 +279,7 @@ public class Bibliotheque {
 	@Override
 	public String toString() {
 		this.trier(this.listeDocuments);
-		String msg ="";
+		String msg ="Liste triée des documents : \n";
 		for(Document o : listeDocuments) {
 			msg += o.toString() + "\n";
 		}

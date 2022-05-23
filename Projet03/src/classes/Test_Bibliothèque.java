@@ -34,8 +34,12 @@ public class Test_Bibliothèque {
 		bibli.listeDocuments = Serialisation.fichiertoObject(path);
 		bibli.ajouter(new BD (null, null, "Pif","Edison", 109));
 		bibli.ajouter(new Journal (null, null, "Le monde", "2021-03-27"));
-		
 		System.out.println(bibli.toString());
+		
+		System.out.println();
+		System.out.println(bibli.afficherListeLivres());
+		
+		
 	
 	}
 }
