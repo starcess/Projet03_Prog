@@ -29,15 +29,31 @@ public class Test_Bibliothèque {
 			Livre : VH-99D96-47, Les Misérables 1942 Roman 3/3
 		*/
 		
-		String path = "./Ressources/Liste_Livre.txt";
-		Bibliotheque bibli = new Bibliotheque();
-		bibli.listeDocuments = Serialisation.fichiertoObject(path);
-		bibli.ajouter(new BD (null, null, "Pif","Edison", 109));
-		bibli.ajouter(new Journal (null, null, "Le monde", "2021-03-27"));
-		System.out.println(bibli.toString());
 		
-		System.out.println();
-		System.out.println(bibli.afficherListeLivres());
+		try {
+			String path = "./Ressources/Liste_Livre.txt";
+			int position;
+			
+			Bibliotheque bibli = new Bibliotheque();
+			bibli.listeDocuments = Serialisation.fichiertoObject(path);
+			bibli.ajouter(new BD (null, null, "Pif","Edison", 109));
+			bibli.ajouter(new Journal (null, null, "Le monde", "2021-03-27"));
+			System.out.println(bibli.toString());
+			
+			System.out.println();
+			System.out.println(bibli.afficherListeLivres());
+			
+			position = bibli.rechercheTitre("L'Etranger");
+			bibli.emprunter(position);
+			System.out.println("Prêt : \n" + bibli.listeDocuments.get(position).toString());
+			
+			position = bibli.rechercheCode("AC-4ABB6-47");
+			bibli.retourner(position);
+			System.out.println("Retour : \n" + bibli.listeDocuments.get(position).toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	

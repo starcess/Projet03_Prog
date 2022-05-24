@@ -28,19 +28,23 @@ public class Bibliotheque {
 	 * Au cas où il n’y a plus de place pour le document 
 	 * (si on dépasse la capacité de la bibliothèque), on doit lever une exception.
 	 * @param document
+	 * @throws Exception 
 	 */
-	public void ajouter(Document document) {
+	public void ajouter(Document document) throws Exception {
 		if (Document.getNbDocument() <= MAX) {
 			listeDocuments.add(document);
-		}	
+		}else {
+			throw new Exception("Il ne reste plus de place dans la bibliothèque " + this.nomBibliotheque);
+		}
 	}
 	
 	/**
 	 * Supprimer un document: 
 	 * La suppression d'un document de la collection de documents.  
 	 * @param code
+	 * @throws Exception 
 	 */
-	public void suppression(String code){
+	public void suppression(String code) throws Exception{
 		int index;
 		for(Document o : listeDocuments) {
 			if(o.code.equalsIgnoreCase(code) && (o != null)) {
@@ -54,32 +58,39 @@ public class Bibliotheque {
 	 * La recherche d'un document par code
 	 * @param code
 	 * @return
+	 * @throws Exception 
 	 */
-	public int rechercheCode(String code) {
+	public int rechercheCode(String code) throws Exception {
 		int pos = -1;
 		if(code.isBlank() == false ) {
-			for(int i = 0; i <=  listeDocuments.size(); i++) {
+			for(int i = 0; i < listeDocuments.size(); i++) {
 				if ((listeDocuments.get(i)!= null) && listeDocuments.get(i).code.equalsIgnoreCase(code)) {
 					pos = i;
 				}
 			}
+		}else {
+			throw new Exception("Ce code n'a pas été trouvé.");
 		}
 		return pos;
+		
 	}
 	
 	/**
 	 * La recherche d'un document par titre
 	 * @param titre
 	 * @return
+	 * @throws Exception 
 	 */
-	public int rechercheTitre(String titre) {
+	public int rechercheTitre(String titre) throws Exception {
 		int pos = -1;
 		if(titre.isBlank() == false ) {
-			for(int i = 0; i <= listeDocuments.size(); i++) {
+			for(int i = 0; i < listeDocuments.size(); i++) {
 				if ((listeDocuments.get(i)!= null) && listeDocuments.get(i).titre.equalsIgnoreCase(titre)) {
 					pos = i;
 				}
 			}
+		}else {
+			throw new Exception("Ce titre n'a pas été trouvé.");
 		}
 		return pos;
 	}
@@ -107,7 +118,7 @@ public class Bibliotheque {
 		String msg;
 		Livre l;
 		int nbDispo;
-		if(listeDocuments.get(position) instanceof Livre) {
+		if((listeDocuments.get(position) instanceof Livre) && (position > 0) && (position < this.listeDocuments.size())) {
 			l = (Livre) listeDocuments.get(position);
 			if(l.getNombreDisponible() > 0) {
 				nbDispo = l.getNombreTotal() - 1; 
@@ -118,8 +129,8 @@ public class Bibliotheque {
 				throw new Exception(msg);
 			}	
 		}else {
-			msg = "Ce n'étais pas un livre.";
-			throw new Exception(msg);
+		msg = "Ce n'étais pas un livre ou position plus petit que 0 et plus grande que la taille de la liste des documents ";
+		throw new Exception(msg);
 		}
 	}
 		
@@ -135,10 +146,10 @@ public class Bibliotheque {
 		String msg;
 		Livre l;
 		int nbDispo;
-		if(listeDocuments.get(position) instanceof Livre) {
+		if((listeDocuments.get(position) instanceof Livre) && (position > 0) && (position < this.listeDocuments.size())) {
 			l = (Livre) listeDocuments.get(position);
 			if(l.getNombreDisponible() < l.getNombreTotal()) {
-				nbDispo = l.getNombreTotal() + 1; 
+				nbDispo = l.getNombreDisponible() + 1; 
 				l.setNombreDisponible(nbDispo);
 				listeDocuments.set(nbDispo, l);
 			}else {
