@@ -10,7 +10,7 @@ import util.CodeGenerator;
  *  TODO
  * Author : Prénom, nom
  */
-public class Livre extends Volume{
+public class Livre extends Volume  {
 	protected int annee;
 	protected Genre genre;
 	protected int nombreTotal;

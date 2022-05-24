@@ -10,7 +10,7 @@ import util.CodeGenerator;
  *  TODO
  * Author : Prénom, nom
  */
-public class BD extends Volume{
+public class BD extends Volume  {
 
 	protected int numEdition;
 	

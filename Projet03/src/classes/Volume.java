@@ -4,11 +4,13 @@
  */
 package classes;
 
+import java.io.Serializable;
+
 /**
  *  TODO
  * Author : Prénom, nom
  */
-public class Volume extends Document {
+public class Volume extends Document implements Serializable  {
 
 	protected String autheur;
 	

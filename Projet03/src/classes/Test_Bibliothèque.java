@@ -31,25 +31,33 @@ public class Test_Bibliothèque {
 		
 		
 		try {
-			String path = "./Ressources/Liste_Livre.txt";
+			String pathChargementLivre = "./Ressources/Liste_Livre.txt";
+			String pathSauvegardeXml = "./Ressources/objectToXml.xml";
+			String pathSauvegardeBinaire = "./Ressources/objectToBinaire.bin";
 			int position;
 			
 			Bibliotheque bibli = new Bibliotheque();
-			bibli.listeDocuments = Serialisation.fichiertoObject(path);
+			bibli.listeDocuments = Serialisation.fichiertoObject(pathChargementLivre);
 			bibli.ajouter(new BD (null, null, "Pif","Edison", 109));
 			bibli.ajouter(new Journal (null, null, "Le monde", "2021-03-27"));
 			System.out.println(bibli.toString());
 			
 			System.out.println();
 			System.out.println(bibli.afficherListeLivres());
+			System.out.println();
 			
 			position = bibli.rechercheTitre("L'Etranger");
+			System.out.println("Livre trouvé par titre :\t"  + bibli.listeDocuments.get(position).toString());
 			bibli.emprunter(position);
-			System.out.println("Prêt : \n" + bibli.listeDocuments.get(position).toString());
-			
+			System.out.println("Prêt :\t" + bibli.listeDocuments.get(position).toString());
 			position = bibli.rechercheCode("AC-4ABB6-47");
+			System.out.println("Livre trouvé par code :\t"  + bibli.listeDocuments.get(position).toString());
 			bibli.retourner(position);
-			System.out.println("Retour : \n" + bibli.listeDocuments.get(position).toString());
+			System.out.println("Retour :\t"  + bibli.listeDocuments.get(position).toString());
+		
+			System.out.println();
+			bibli.sauvegardeXml(bibli.listeDocuments, pathSauvegardeXml);
+			bibli.sauvegardeBinaire(bibli.listeDocuments, pathSauvegardeBinaire);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

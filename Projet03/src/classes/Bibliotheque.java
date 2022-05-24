@@ -200,6 +200,7 @@ public class Bibliotheque {
 	 */
 	public void sauvegardeBinaire(ArrayList<Document> listeDocuments1, String path) throws FileNotFoundException, IOException {
 		Serialisation.objetToBinaire(listeDocuments1, path);
+		System.out.println("Bibliothèque sérialisée en binaire avec succès");
 	}
 	
 	
@@ -211,6 +212,7 @@ public class Bibliotheque {
 	 */
 	public void sauvegardeJson(ArrayList<Document> listeDocuments1, String path) throws IOException {
 		Serialisation.objectToJson(listeDocuments1, path);
+		System.out.println("Bibliothèque sérialisée en json avec succès");
 	}
 	
 	
@@ -222,6 +224,7 @@ public class Bibliotheque {
 	 */
 	public void sauvegardeXml(ArrayList<Document> listeDocuments1, String path) throws IOException {
 		Serialisation.objetToXML(listeDocuments1, path);
+		System.out.println("Bibliothèque sérialisée en xml avec succès");
 	}
 	
 	
