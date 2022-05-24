@@ -7,6 +7,8 @@ package projet03_gui;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import util.UserInfo;
 
 /**
  *  TODO
@@ -38,8 +42,8 @@ public class FeAu extends JFrame {
 			@Override
 			public void run() {
 				try {
-					FeAu frame = new FeAu();
-					frame.setVisible(true);
+					FeAu frameAu = new FeAu();
+					frameAu.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -77,6 +81,7 @@ public class FeAu extends JFrame {
 		contentPane.add(passwordField);
 		
 		btnNewButton = new JButton("Connexion");
+		btnNewButton.addActionListener(new BtnNewButtonActionListener());
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton.setBounds(35, 204, 127, 32);
 		contentPane.add(btnNewButton);
@@ -97,13 +102,45 @@ public class FeAu extends JFrame {
 		lbl_Status.setForeground(Color.RED);
 		lbl_Status.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_Status.setBounds(194, 214, 144, 13);
+		lbl_Status.setVisible(false);
 		contentPane.add(lbl_Status);
 	}
 	
+	
+	
+	//Attributes
+	UserInfo user = new UserInfo();
+	boolean verify = false;
+	FeGestion frameGestion;
+	//FeAu frameAu = new FeAu();
+	
+		
 	public boolean authentifier() {
+		int i = 0;
 		String id = textField_Username.getText();
 		String pwd = String.valueOf(passwordField.getPassword());
 		System.out.println("ID: " + id + "\nPassword : " + pwd);
-		return true;
+		
+		while(i < user.getPwd().size()) {
+			if(id.equals(user.getUsername().get(i)) 
+					&& pwd.equals(user.getPwd().get(i))) {
+				verify = true;
+			}
+			i++;
+		}
+		return verify;
+	}
+	private class BtnNewButtonActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			boolean check = authentifier();
+			if (check == true) {
+				frameGestion = new FeGestion();
+				frameGestion.setVisible(true);
+				//frameAu.setVisible(false);
+			}else{
+				lbl_Status.setVisible(true);
+			}
+		}
 	}
 }
