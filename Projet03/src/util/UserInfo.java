@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -17,8 +18,8 @@ import java.util.StringTokenizer;
  */
 public class UserInfo {
 
-	private String[] username;
-	private String[] pwd;
+	private ArrayList <String> listeUsername;
+	private ArrayList <String> listePwd;
 	
 	
 	//Methods
@@ -28,26 +29,24 @@ public class UserInfo {
 	 * @param path
 	 * @return
 	 */
-	public static String[] fichiertoPwd(String path)  {
+	public  ArrayList<String> fichiertoPwd(String path)  {
 		String ligne = "";
-		String[] pwd = new String[10];
+		ArrayList<String> pwd = new ArrayList();
 		String password;
-		int i = 0;
 
 		// utilisation de try-with
 		try (FileReader fr = new FileReader(path); // ouvrir fichier en lecture
 				BufferedReader br = new BufferedReader(fr);) {
 
-			while (br.ready()  && (i < pwd.length)) { // tant que pas fin de fichier
+			while (br.ready()) { // tant que pas fin de fichier
 				// Lire une ligne de texte
 				ligne = br.readLine();
 
 				if(ligne != null) {
 					// Extraire les données de la ligne
-					StringTokenizer str = new StringTokenizer(ligne, "[\t]");
+					StringTokenizer str = new StringTokenizer(ligne, "[\n]");
 						password = str.nextToken();
-						pwd[i] = password;
-						i++;	
+						pwd.add(password);	
 				    }
 				
 			} // fin while
@@ -66,32 +65,29 @@ public class UserInfo {
 	}//fin méthode
 		
 	
-	
 	/**
 	 * 
 	 * @param path
 	 * @return
 	 */
-	public static String[] fichiertoUserName(String path) {
+	public ArrayList<String> fichiertoUserName(String path) {
 		String ligne = "";
-		String[] username = new String[10];
+		ArrayList<String> username = new ArrayList();
 		String utilisateur;
-		int i = 0;
 
 		// utilisation de try-with
 		try (FileReader fr = new FileReader(path); // ouvrir fichier en lecture
 				BufferedReader br = new BufferedReader(fr);) {
 
-			while (br.ready()  && (i < username.length)) { // tant que pas fin de fichier
+			while (br.ready()) { // tant que pas fin de fichier
 				// Lire une ligne de texte
 				ligne = br.readLine();
 
 				if(ligne != null) {
 					// Extraire les données de la ligne
-					StringTokenizer str = new StringTokenizer(ligne, "[\t]");
+					StringTokenizer str = new StringTokenizer(ligne, "[\n]");
 						utilisateur = str.nextToken();
-						username[i] = utilisateur;
-						i++;	
+						username.add(utilisateur);
 				    }
 				
 			} // fin while
@@ -109,13 +105,23 @@ public class UserInfo {
 		return username;
 	}//fin méthode
 	
+
+	public void addUserName(String username1) {
+		this.listeUsername.add(username1);		
+	}
+	
+	
+	public void addPwd(String pwd1) {
+		this.listePwd.add(pwd1);		
+	}
+	
 	
 	//Getters, setters and cosntructors
 	/**
 	 * @return the username
 	 */
-	public String[] getUsername() {
-		return username;
+	public ArrayList<String> getUsername() {
+		return listeUsername;
 	}
 
 
@@ -125,15 +131,15 @@ public class UserInfo {
 	public void setUsername(String[] username) {
 		//this.username = username;
 		String path = "./Ressources/users.txt";
-		this.username = fichiertoUserName(path);
+		this.listeUsername = fichiertoUserName(path);
 	}
 
 
 	/**
 	 * @return the pwd
 	 */
-	public String[] getPwd() {
-		return pwd;
+	public ArrayList<String> getPwd() {
+		return listePwd;
 	}
 	
 
@@ -144,7 +150,7 @@ public class UserInfo {
 	public void setPwd(String[] pwd)  {
 		//this.pwd = pwd;
 		String path = "./Ressources/pwds.txt";
-		this.pwd = fichiertoPwd(path);
+		this.listePwd = fichiertoPwd(path);
 	}
 	
 	
