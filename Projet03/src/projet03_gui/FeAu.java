@@ -103,6 +103,7 @@ public class FeAu extends JFrame {
 		contentPane.add(lbl_Status);
 	}
 
+	// Ouvre la fenetre Gestion
 	private class Btn_ConnexionActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			authentifier();

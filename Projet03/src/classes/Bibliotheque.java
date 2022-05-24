@@ -330,10 +330,11 @@ public class Bibliotheque {
 		// listeDocuments = new ArrayList();
 	}
 
+	// Retourne le nombre de document
 	public int getNbDocuments() {
 		return Document.getNbDocument();
 	}
-	
+
 	// Retourne un document selon la position donnée
 	public Document getDocument(int position) {
 		return listeDocuments.get(position);

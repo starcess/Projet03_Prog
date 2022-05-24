@@ -25,7 +25,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import classes.Bibliotheque;
-import classes.Categorie;
 import util.Serialisation;
 
 /**
@@ -296,6 +295,7 @@ public class FeGestion extends JFrame {
 		}
 	}
 
+	// Affiche l'information du document selon le code selecitonné
 	private class Cb_CodeActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			reset();
@@ -304,14 +304,11 @@ public class FeGestion extends JFrame {
 				int position = biblio.rechercheCode(code);
 				textArea.setText(biblio.getDocument(position).toString());
 				System.out.println();
-				/*switch (biblio.getDocument(position).getCategorie()) {
-				case Categorie.LIVRE:
-					rdbtn_Livre.setSelected(true);
-				case BD:
-					rdbtn_BD.setSelected(true);
-				case JOURNAL:
-					rdbtn_Journal.setSelected(true);
-				}*/
+				/*
+				 * switch (biblio.getDocument(position).getCategorie()) { case Categorie.LIVRE:
+				 * rdbtn_Livre.setSelected(true); case BD: rdbtn_BD.setSelected(true); case
+				 * JOURNAL: rdbtn_Journal.setSelected(true); }
+				 */
 
 			} catch (Exception e1) {
 				lbl_Erreur.setText(e1.getMessage());
