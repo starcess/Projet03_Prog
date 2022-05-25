@@ -32,8 +32,8 @@ public class Test_Bibliothèque {
 		
 		try {
 			String pathChargementLivre = "./Ressources/Liste_Livre.txt";
-			String pathSauvegardeXml = "./Ressources/objectToXml.xml";
-			String pathSauvegardeBinaire = "./Ressources/objectToBinaire.bin";
+			String pathXml = "./Ressources/Liste_Xml.xml";
+			String pathBinaire = "./Ressources/Liste_Binaire.bin";
 			int position;
 			
 			Bibliotheque bibli = new Bibliotheque();
@@ -56,8 +56,21 @@ public class Test_Bibliothèque {
 			System.out.println("Retour :\t"  + bibli.listeDocuments.get(position).toString());
 		
 			System.out.println();
-			bibli.sauvegardeXml(bibli.listeDocuments, pathSauvegardeXml);
-			bibli.sauvegardeBinaire(bibli.listeDocuments, pathSauvegardeBinaire);
+			bibli.sauvegardeXml(bibli.listeDocuments, pathXml);
+			bibli.sauvegardeBinaire(bibli.listeDocuments, pathBinaire);
+			
+			System.out.println();
+			System.out.println(); 
+			
+			Bibliotheque bibli2 = new Bibliotheque("Deuxième bibliothèque");
+			bibli2.setFromListeDocuments(bibli2.chargementBinaire(pathBinaire)); 
+			System.out.println(bibli2.getNomBibliotheque() + "\n" + bibli2.toString());
+			
+			
+			//Bibliotheque bibli3 = new Bibliotheque("Troisième bibliothèque");
+			//bibli2.setFromListeDocuments(bibli3.chargementXml(pathBinaire)); 
+			//System.out.println(bibli3.getNomBibliotheque() + "\n" + bibli3.toString());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

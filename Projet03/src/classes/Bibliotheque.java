@@ -169,25 +169,31 @@ public class Bibliotheque {
 	 * a.compareTo(b) == 0 si a.equals(b)
 	 * a.compareTo(b) < 0 pour a strictement inférieur à b
 	 * a.compareTo(b) > 0 pour a strictement supérieur à b 
+	 * @throws Exception 
 	 */
-	public ArrayList <Document> trier(ArrayList <Document> listeDocuments1) {
+	public ArrayList <Document> trier(ArrayList <Document> listeDocuments1) throws Exception {
 		int result = -1;
 		Document temporaire;
 		
-		for (int i = 0; i < listeDocuments1.size() ; i++) {
-			if(listeDocuments1.get(i) != null) {
-				for(int j = i+1; j < listeDocuments1.size(); j++) {
-					if(listeDocuments1.get(j) != null) {
-						result =listeDocuments1.get(i).compareTo(listeDocuments.get(j));    
-						if (result > 0) {
-							temporaire = listeDocuments1.get(i);
-							listeDocuments1.set(i, listeDocuments1.get(j));
-							listeDocuments1.set(j, temporaire);
-						}					
-					}//fin if(listeDocuments.get(j) != null) {
-				}//fin inside for j			
-			}//fin if (listeDocuments.get(i) != null)
-		}//fin outside for i	
+		if(listeDocuments1.size() > 0) {
+			for (int i = 0; i < listeDocuments1.size() ; i++) {
+				if(listeDocuments1.get(i) != null) {
+					for(int j = i+1; j < listeDocuments1.size(); j++) {
+						if(listeDocuments1.get(j) != null) {
+							result =listeDocuments1.get(i).compareTo(listeDocuments.get(j));    
+							if (result > 0) {
+								temporaire = listeDocuments1.get(i);
+								listeDocuments1.set(i, listeDocuments1.get(j));
+								listeDocuments1.set(j, temporaire);
+							}					
+						}//fin if(listeDocuments.get(j) != null) {
+					}//fin inside for j			
+				}//fin if (listeDocuments.get(i) != null)
+			}//fin outside for i
+		}else {
+			throw new Exception("La liste de document est vide.");
+		}
+			
 		return listeDocuments1;
 	}//fin méthode
 	
@@ -273,8 +279,9 @@ public class Bibliotheque {
 	 * Afficher la liste triée des livres 
 	 * @param listeDocuments1
 	 * @return
+	 * @throws Exception 
 	 */
-	public String afficherListeLivres() {
+	public String afficherListeLivres() throws Exception {
 		String msg = "Liste triés des livres: \n";
 		this.trier(this.listeDocuments);
 		for(int i = 0 ; i < this.listeDocuments.size(); i++ ){
@@ -292,11 +299,17 @@ public class Bibliotheque {
 	 */
 	@Override
 	public String toString() {
-		this.trier(this.listeDocuments);
 		String msg ="Liste triée des documents : \n";
-		for(Document o : listeDocuments) {
-			msg += o.toString() + "\n";
-		}
+		try {
+			this.trier(this.listeDocuments);
+			for(Document o : listeDocuments) {
+				msg += o.toString() + "\n";
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		return msg;
 	}
 	
@@ -330,7 +343,19 @@ public class Bibliotheque {
 	 */
 	public void setListeDocuments(ArrayList<Document> listeDocuments) {
 		//this.listeDocuments = listeDocuments;
-		listeDocuments = new ArrayList();
+		this.listeDocuments = new ArrayList();
+	}
+	
+	
+	public void setFromListeDocuments(ArrayList<Document> listeDocuments1) {
+		//this.listeDocuments = listeDocuments;
+		this.listeDocuments = listeDocuments1;
+	}
+	
+	
+	public void setListeDocuments() {
+		//this.listeDocuments = listeDocuments;
+		this.listeDocuments = new ArrayList();
 	}
 
 	/**
@@ -346,7 +371,7 @@ public class Bibliotheque {
 	 */
 	public Bibliotheque() {
 		//this(String nom);
-		setListeDocuments(listeDocuments);
+		setListeDocuments();
 	}
 	
 	

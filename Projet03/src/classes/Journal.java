@@ -4,7 +4,6 @@
  */
 package classes;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import util.CodeGenerator;
@@ -13,7 +12,7 @@ import util.CodeGenerator;
  *  TODO
  * Author : Prénom, nom
  */
-public class Journal extends Document  implements Serializable {
+public class Journal extends Document{
 
 	protected String dateParution;
 	protected int annee;

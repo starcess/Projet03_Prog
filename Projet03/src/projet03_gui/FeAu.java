@@ -36,10 +36,10 @@ public class FeAu extends JFrame {
 	//My attributes
 	private UserInfo user = new UserInfo();
 	private boolean verify = false;
-	private static FeGestion frameGestion;
-	private static FeAu frameAu;
+	private FeGestion frameGestion;
 	
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +48,7 @@ public class FeAu extends JFrame {
 			@Override
 			public void run() {
 				try {
-					frameAu = new FeAu();
+					FeAu frameAu = new FeAu();
 					frameAu.setVisible(true);					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,6 +64,8 @@ public class FeAu extends JFrame {
 	public FeAu() {
 		initialize();
 	}
+	
+	
 	private void initialize() {
 		setTitle("Authentification");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,7 +115,7 @@ public class FeAu extends JFrame {
 		contentPane.add(lbl_Status);
 	}
 	
-		
+	
 	public boolean authentifier() {
 		int i = 0;
 		String id = textField_Username.getText();
@@ -134,12 +136,21 @@ public class FeAu extends JFrame {
 	public class BtnNewButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
+			/* 			 
+			authentifier();
+			FeGestion frame = new FeGestion();
+			dispose();
+			frame.setVisible(true);			 
+			 */
+			
 			boolean check = authentifier();
 			if (check == true) {
 				frameGestion = new FeGestion();
 				frameGestion.setVisible(true);
 				lbl_Status.setVisible(false);
-				frameAu.setVisible(false);
+				dispose();
+				//frameAu.setVisible(false);
 			}else{
 				lbl_Status.setVisible(true);
 			}

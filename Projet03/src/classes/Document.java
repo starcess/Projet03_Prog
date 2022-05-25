@@ -4,13 +4,14 @@
  */
 package classes;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *  TODO
  * Author : Prénom, nom
  */
-public class Document implements Comparable<Document>{
+public class Document implements Comparable<Document>, Serializable {
 
 	protected String code;
 	protected Categorie categorie;

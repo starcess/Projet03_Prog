@@ -7,6 +7,9 @@ package projet03_gui;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -21,6 +24,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+
+import classes.Bibliotheque;
+import classes.Document;
 
 /**
  *  TODO
@@ -58,6 +64,12 @@ public class FeGestion extends JFrame {
 	private JButton btn_Effacer;
 	private JButton btn_Lister;
 	private JButton btn_Quitter;
+	//My attributes
+	private FeAu frameAu;
+	private static Bibliotheque bibli;
+	private static String pathBinaireToObject;
+	private String pathOjectToBinaire;
+	
 
 	/**
 	 * Launch the application.
@@ -69,6 +81,7 @@ public class FeGestion extends JFrame {
 				try {
 					FeGestion frame = new FeGestion();
 					frame.setVisible(true);
+					chargerFichierBinaire();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -219,39 +232,96 @@ public class FeGestion extends JFrame {
 		panel_Buttons.setLayout(null);
 		
 		btn_Ajouter = new JButton("");
+		btn_Ajouter.addActionListener(new Btn_AjouterActionListener());
 		btn_Ajouter.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_ajouter.png")));
 		btn_Ajouter.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Ajouter.setBounds(32, 22, 50, 50);
 		panel_Buttons.add(btn_Ajouter);
 		
 		btn_Supprimer = new JButton("");
+		btn_Supprimer.addActionListener(new Btn_SupprimerActionListener());
 		btn_Supprimer.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_delete.jpg")));
 		btn_Supprimer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Supprimer.setBounds(92, 22, 50, 50);
 		panel_Buttons.add(btn_Supprimer);
 		
 		btn_Charger = new JButton("");
+		btn_Charger.addActionListener(new Btn_ChargerActionListener());
 		btn_Charger.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_downlod.png")));
 		btn_Charger.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Charger.setBounds(152, 22, 50, 50);
 		panel_Buttons.add(btn_Charger);
 		
 		btn_Effacer = new JButton("");
+		btn_Effacer.addActionListener(new Btn_EffacerActionListener());
 		btn_Effacer.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_erase.png")));
 		btn_Effacer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Effacer.setBounds(212, 22, 50, 50);
 		panel_Buttons.add(btn_Effacer);
 		
 		btn_Lister = new JButton("");
+		btn_Lister.addActionListener(new Btn_ListerActionListener());
 		btn_Lister.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_lister.jpg")));
 		btn_Lister.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Lister.setBounds(272, 22, 50, 50);
 		panel_Buttons.add(btn_Lister);
-		
 		btn_Quitter = new JButton("");
+		btn_Quitter.addActionListener(new Btn_QuitterActionListener());
 		btn_Quitter.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_quit_2.jpg")));
 		btn_Quitter.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Quitter.setBounds(329, 22, 50, 50);
 		panel_Buttons.add(btn_Quitter);
 	}
+	
+	//Charger fichier Document
+	public static void chargerFichierBinaire() throws ClassNotFoundException, IOException {
+		bibli = new Bibliotheque ();
+		pathBinaireToObject = "./Ressources/objectToBinaire.bin";
+		bibli.setListeDocuments(bibli.chargementBinaire(pathBinaireToObject)); 
+	}
+	
+	
+	private class Btn_AjouterActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	
+	
+	private class Btn_SupprimerActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	
+	
+	private class Btn_ChargerActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	
+	private class Btn_EffacerActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	
+	
+	private class Btn_ListerActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			textArea.setText(bibli.getNomBibliotheque() + "\n");
+			textArea.append(bibli.toString() + "\n");
+			textArea.append("Capacité : " + Document.getNbDocument() + " documents");
+		}
+	}
+	
+	private class Btn_QuitterActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	
+	
 }
