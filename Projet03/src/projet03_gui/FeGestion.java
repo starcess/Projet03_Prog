@@ -53,8 +53,8 @@ public class FeGestion extends JFrame {
 	private JRadioButton rdbtn_Livre;
 	private JRadioButton rdbtn_Journal;
 	private JRadioButton rdbtn_BD;
-	private final ButtonGroup buttonGroupCategorie = new ButtonGroup();
-	private static JComboBox cb_Genre;
+	private static final ButtonGroup buttonGroupCategorie = new ButtonGroup();
+	private static  JComboBox <Genre> cb_Genre;
 	private static JTextField textField_Titre;
 	private static JTextField textField_Autheur;
 	private static JTextField textField_Annee;
@@ -73,7 +73,10 @@ public class FeGestion extends JFrame {
 	private FeAu frameAu;
 	private static Bibliotheque bibli;
 	private static String pathBinaire = "./Ressources/Liste_Binaire.bin";
-	
+	private static String pathXml = "./Ressources/Liste_Xml.xml";
+	private JLabel lbl_Erreur;
+	private JButton btn_Preter;
+	private JButton btn_Retourner;
 
 	/**
 	 * Launch the application.
@@ -161,7 +164,7 @@ public class FeGestion extends JFrame {
 		cb_Code = new JComboBox();
 		cb_Code.addActionListener(new Cb_CodeActionListener());
 		cb_Code.setFont(new Font("Tahoma", Font.BOLD, 14));
-		cb_Code.setBounds(89, 42, 280, 21);
+		cb_Code.setBounds(74, 42, 259, 21);
 		contentPane.add(cb_Code);
 		
 		rdbtn_Livre = new JRadioButton("Livre");
@@ -184,25 +187,25 @@ public class FeGestion extends JFrame {
 		
 		cb_Genre = new JComboBox();
 		cb_Genre.setFont(new Font("Tahoma", Font.BOLD, 14));
-		cb_Genre.setBounds(235, 215, 114, 21);
+		cb_Genre.setBounds(210, 215, 178, 21);
 		contentPane.add(cb_Genre);
 		
 		textField_Titre = new JTextField();
 		textField_Titre.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_Titre.setBounds(89, 79, 284, 19);
+		textField_Titre.setBounds(74, 78, 239, 19);
 		contentPane.add(textField_Titre);
 		textField_Titre.setColumns(10);
 		
 		textField_Autheur = new JTextField();
 		textField_Autheur.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textField_Autheur.setColumns(10);
-		textField_Autheur.setBounds(85, 134, 284, 19);
+		textField_Autheur.setBounds(74, 134, 239, 19);
 		contentPane.add(textField_Autheur);
 		
 		textField_Annee = new JTextField();
 		textField_Annee.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textField_Annee.setColumns(10);
-		textField_Annee.setBounds(85, 175, 146, 19);
+		textField_Annee.setBounds(74, 175, 146, 19);
 		contentPane.add(textField_Annee);
 		
 		textField_NbCopies = new JTextField();
@@ -212,9 +215,10 @@ public class FeGestion extends JFrame {
 		contentPane.add(textField_NbCopies);
 		
 		btn_Search = new JButton("");
+		btn_Search.addActionListener(new Btn_SearchActionListener());
 		btn_Search.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_1search.png")));
 		btn_Search.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btn_Search.setBounds(383, 73, 30, 30);
+		btn_Search.setBounds(323, 74, 30, 30);
 		contentPane.add(btn_Search);
 		
 		textField_Date = new JTextField();
@@ -232,7 +236,7 @@ public class FeGestion extends JFrame {
 		panel_Buttons = new JPanel();
 		panel_Buttons.setBackground(Color.BLACK);
 		panel_Buttons.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.ORANGE, Color.ORANGE, Color.ORANGE, Color.ORANGE));
-		panel_Buttons.setBounds(449, 10, 405, 94);
+		panel_Buttons.setBounds(398, 10, 488, 94);
 		contentPane.add(panel_Buttons);
 		panel_Buttons.setLayout(null);
 		
@@ -240,42 +244,62 @@ public class FeGestion extends JFrame {
 		btn_Ajouter.addActionListener(new Btn_AjouterActionListener());
 		btn_Ajouter.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_ajouter.png")));
 		btn_Ajouter.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btn_Ajouter.setBounds(32, 22, 50, 50);
+		btn_Ajouter.setBounds(10, 22, 50, 50);
 		panel_Buttons.add(btn_Ajouter);
 		
 		btn_Supprimer = new JButton("");
 		btn_Supprimer.addActionListener(new Btn_SupprimerActionListener());
 		btn_Supprimer.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_delete.jpg")));
 		btn_Supprimer.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btn_Supprimer.setBounds(92, 22, 50, 50);
+		btn_Supprimer.setBounds(70, 22, 50, 50);
 		panel_Buttons.add(btn_Supprimer);
 		
 		btn_Sauvegarder = new JButton("");
 		btn_Sauvegarder.addActionListener(new Btn_SauvegarderActionListener());
 		btn_Sauvegarder.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_downlod.png")));
 		btn_Sauvegarder.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btn_Sauvegarder.setBounds(152, 22, 50, 50);
+		btn_Sauvegarder.setBounds(130, 22, 50, 50);
 		panel_Buttons.add(btn_Sauvegarder);
 		
 		btn_Effacer = new JButton("");
 		btn_Effacer.addActionListener(new Btn_EffacerActionListener());
 		btn_Effacer.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_erase.png")));
 		btn_Effacer.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btn_Effacer.setBounds(212, 22, 50, 50);
+		btn_Effacer.setBounds(308, 22, 50, 50);
 		panel_Buttons.add(btn_Effacer);
 		
 		btn_Lister = new JButton("");
 		btn_Lister.addActionListener(new Btn_ListerActionListener());
 		btn_Lister.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_lister.jpg")));
 		btn_Lister.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btn_Lister.setBounds(272, 22, 50, 50);
+		btn_Lister.setBounds(368, 22, 50, 50);
 		panel_Buttons.add(btn_Lister);
 		btn_Quitter = new JButton("");
 		btn_Quitter.addActionListener(new Btn_QuitterActionListener());
 		btn_Quitter.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_quit_2.jpg")));
 		btn_Quitter.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btn_Quitter.setBounds(329, 22, 50, 50);
+		btn_Quitter.setBounds(428, 22, 50, 50);
 		panel_Buttons.add(btn_Quitter);
+		
+		btn_Preter = new JButton("");
+		btn_Preter.addActionListener(new Btn_PreterActionListener());
+		btn_Preter.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_borrow_second.png")));
+		btn_Preter.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_Preter.setBounds(190, 22, 50, 50);
+		panel_Buttons.add(btn_Preter);
+		
+		btn_Retourner = new JButton("");
+		btn_Retourner.addActionListener(new Btn_RetournerActionListener());
+		btn_Retourner.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_return.jpg")));
+		btn_Retourner.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_Retourner.setBounds(248, 22, 50, 50);
+		panel_Buttons.add(btn_Retourner);
+		
+		lbl_Erreur = new JLabel("Erreur");
+		lbl_Erreur.setForeground(Color.RED);
+		lbl_Erreur.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lbl_Erreur.setBounds(38, 249, 812, 31);
+		contentPane.add(lbl_Erreur);
 	}
 	
 	
@@ -306,6 +330,7 @@ public class FeGestion extends JFrame {
 					textField_Titre.setText(bd.getTitre());
 					textField_Autheur.setText(bd.getAutheur());
 					textField_Numero.setText(String.valueOf(bd.getNumEdition()));
+					cb_Genre.setSelectedItem(Genre.NON_APPLICABLE);
 				}else if(docTemp instanceof Journal) {
 					//public Journal(String code1, String categorie1, String titre1, String dateParution1)
 					effacerTout();
@@ -313,6 +338,7 @@ public class FeGestion extends JFrame {
 					rdbtn_Journal.setSelected(true);
 					textField_Titre.setText(j.getTitre());
 					textField_Date.setText(j.getDateParution());
+					cb_Genre.setSelectedItem(Genre.NON_APPLICABLE);
 				}
 				
 			} catch (Exception e1) {
@@ -360,6 +386,8 @@ public class FeGestion extends JFrame {
 			textField_NbCopies.setText(null);
 			textField_Numero.setText(null);
 			textField_Titre.setText(null);
+			buttonGroupCategorie.clearSelection();
+			
 		}
 	
 	private class Btn_AjouterActionListener implements ActionListener {
@@ -367,27 +395,31 @@ public class FeGestion extends JFrame {
 		public void actionPerformed(ActionEvent e) {		
 			try {
 				String numEdition = textField_Numero.getText();
-				int numEdiInt = Integer.parseInt(numEdition);
+				int numEdiInt = -1;
 				String dateParution = textField_Date.getText();
 				String nbCopieTotal = textField_NbCopies.getText();
-				int nbCopieTotalInt = Integer.parseInt(nbCopieTotal);
+				int nbCopieTotalInt = -1;
 				String autheur = textField_Autheur.getText();
 				String titre = textField_Titre.getText();
 				String anneeString = textField_Annee.getText();
-				int anneeInt = Integer.parseInt(anneeString);
-				String g = (String) cb_Genre.getSelectedItem();
-				Genre genre = Genre.valueOf(g);
-				
-				if(rdbtn_BD.isSelected()) {
+				int anneeInt = -1;
+				Genre genre = (Genre) cb_Genre.getSelectedItem();
+				if((numEdition != null) || (nbCopieTotal != null) || (anneeString != null)) {
+					numEdiInt = Integer.parseInt(numEdition);
+					nbCopieTotalInt = Integer.parseInt(nbCopieTotal);
+					anneeInt = Integer.parseInt(anneeString);
+					
+					if(rdbtn_BD.isSelected()) {
 						bibli.ajouter(new BD (null, null, titre , autheur, numEdiInt));
-				}else if(rdbtn_Journal.isSelected()) {
+					}else if(rdbtn_Journal.isSelected()) {
 						bibli.ajouter(new Journal (null, null, autheur, dateParution));
-				}else if(rdbtn_Livre.isSelected()) {
+					}else if(rdbtn_Livre.isSelected()) {
 					bibli.ajouter(new Livre (null, null, titre, autheur, anneeInt, genre, nbCopieTotalInt));
+					}				
+					remplirCbCode();
+					remplirCbGenre();				
 				}
 				
-				remplirCbCode();
-				remplirCbGenre();
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -438,7 +470,7 @@ public class FeGestion extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				bibli.sauvegardeBinaire(bibli.getListeDocuments(), pathBinaire);
-				bibli.sauvegardeXml(bibli.getListeDocuments(), pathBinaire);
+				bibli.sauvegardeXml(bibli.getListeDocuments(), pathXml);
 				System.exit(0);
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -454,7 +486,7 @@ public class FeGestion extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				bibli.sauvegardeBinaire(bibli.getListeDocuments(), pathBinaire);
-				bibli.sauvegardeXml(bibli.getListeDocuments(), pathBinaire);
+				bibli.sauvegardeXml(bibli.getListeDocuments(), pathXml);
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -462,5 +494,19 @@ public class FeGestion extends JFrame {
 			}
 		}
 	}
-		
+	private class Btn_SearchActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	private class Btn_PreterActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	private class Btn_RetournerActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }

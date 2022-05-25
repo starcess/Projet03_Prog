@@ -9,6 +9,5 @@ package classes;
  * Author : Prénom, nom
  */
 public enum Genre {
-	ROMAN, FICTION,TECHNIQUE;
-
+	ROMAN, FICTION,TECHNIQUE, NON_APPLICABLE;
 }

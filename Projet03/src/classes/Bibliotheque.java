@@ -65,14 +65,16 @@ public class Bibliotheque {
 	 */
 	public int rechercheCode(String code) throws Exception {
 		int pos = -1;
+		String msg;
 		if(code.isBlank() == false ) {
 			for(int i = 0; i < listeDocuments.size(); i++) {
 				if ((listeDocuments.get(i)!= null) && listeDocuments.get(i).code.equalsIgnoreCase(code)) {
 					pos = i;
 				}
 			}
-		}else {
-			throw new Exception("Ce code n'a pas été trouvé.");
+		} else {
+			msg = "Code : [" + code + "], non trouvé.";
+			throw new Exception(msg);
 		}
 		return pos;
 		
@@ -86,14 +88,16 @@ public class Bibliotheque {
 	 */
 	public int rechercheTitre(String titre) throws Exception {
 		int pos = -1;
+		String msg;
 		if(titre.isBlank() == false ) {
 			for(int i = 0; i < listeDocuments.size(); i++) {
 				if ((listeDocuments.get(i)!= null) && listeDocuments.get(i).titre.equalsIgnoreCase(titre)) {
 					pos = i;
 				}
 			}
-		}else {
-			throw new Exception("Ce titre n'a pas été trouvé.");
+		} else {
+			msg = "Titre : [" + titre + "], non trouvé.";
+			throw new Exception(msg);
 		}
 		return pos;
 	}
@@ -127,6 +131,8 @@ public class Bibliotheque {
 				nbDispo = l.getNombreTotal() - 1; 
 				l.setNombreDisponible(nbDispo);
 				this.listeDocuments.set(position, l);
+				msg = "Prêt :\t" + this.listeDocuments.get(position).toString();
+				System.out.println(msg);
 			}else {
 				msg = "Il ne reste plus de livre à prêter.";
 				System.out.println(msg);
@@ -155,6 +161,8 @@ public class Bibliotheque {
 				nbDispo = l.getNombreDisponible() + 1; 
 				l.setNombreDisponible(nbDispo);
 				listeDocuments.set(position, l);
+				msg = "Retour :\t" + this.listeDocuments.get(position).toString();
+				System.out.println(msg);
 			}else {
 				msg = "Aucun livre avait été emprunté";
 				System.out.println(msg);

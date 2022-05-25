@@ -49,9 +49,7 @@ public class Test_Bibliothèque {
 			position = bibli.rechercheTitre("L'Etranger");
 			System.out.println("Livre trouvé par titre :\t"  + bibli.listeDocuments.get(position).toString());
 			bibli.emprunter(position);
-			System.out.println("Prêt :\t" + bibli.listeDocuments.get(position).toString());
 			bibli.retourner(position);
-			System.out.println("Retour :\t"  + bibli.listeDocuments.get(position).toString()); 
 			position = bibli.rechercheCode("21-C65B6-25");
 			System.out.println(bibli.getListeDocuments().get(position).getClass().getSimpleName() + " trouvé par code :\t"  + bibli.listeDocuments.get(position).toString());
 			bibli.emprunter(position);
