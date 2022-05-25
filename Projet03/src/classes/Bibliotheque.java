@@ -39,8 +39,7 @@ public class Bibliotheque {
 
 	/**
 	 * Supprimer un document: La suppression d'un document de la collection de
-	 * documents.
-	 * 
+	 * documents. 
 	 * @param code
 	 * @throws Exception
 	 */
@@ -63,6 +62,7 @@ public class Bibliotheque {
 	 */
 	public int rechercheCode(String code) throws Exception {
 		int pos = -1;
+		String msg;
 		if (code.isBlank() == false) {
 			for (int i = 0; i < listeDocuments.size(); i++) {
 				if ((listeDocuments.get(i) != null) && listeDocuments.get(i).code.equalsIgnoreCase(code)) {
@@ -70,7 +70,8 @@ public class Bibliotheque {
 				}
 			}
 		} else {
-			throw new Exception("Ce code n'a pas été trouvé.");
+			msg = "Code : [" + code + "], non trouvé.";
+			throw new Exception(msg);
 		}
 		getDocument(pos);
 		return pos;
@@ -86,6 +87,7 @@ public class Bibliotheque {
 	 */
 	public int rechercheTitre(String titre) throws Exception {
 		int pos = -1;
+		String msg;
 		if (titre.isBlank() == false) {
 			for (int i = 0; i < listeDocuments.size(); i++) {
 				if ((listeDocuments.get(i) != null) && listeDocuments.get(i).titre.equalsIgnoreCase(titre)) {
@@ -93,7 +95,8 @@ public class Bibliotheque {
 				}
 			}
 		} else {
-			throw new Exception("Ce titre n'a pas été trouvé.");
+			msg = "Titre : [" + titre + "], non trouvé.";
+			throw new Exception(msg);
 		}
 		return pos;
 	}
