@@ -32,7 +32,13 @@ public class FeAu extends JFrame {
 	private JButton btnNewButton;
 	private JLabel lbl_Username;
 	private JLabel lbl_Pasword;
-	private JLabel lbl_Status;
+	private static JLabel lbl_Status;
+	//My attributes
+	private UserInfo user = new UserInfo();
+	private boolean verify = false;
+	private static FeGestion frameGestion;
+	private static FeAu frameAu;
+	
 
 	/**
 	 * Launch the application.
@@ -42,14 +48,15 @@ public class FeAu extends JFrame {
 			@Override
 			public void run() {
 				try {
-					FeAu frameAu = new FeAu();
-					frameAu.setVisible(true);
+					frameAu = new FeAu();
+					frameAu.setVisible(true);					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the frame.
@@ -106,14 +113,6 @@ public class FeAu extends JFrame {
 		contentPane.add(lbl_Status);
 	}
 	
-	
-	
-	//Attributes
-	UserInfo user = new UserInfo();
-	boolean verify = false;
-	FeGestion frameGestion;
-	//FeAu frameAu = new FeAu();
-	
 		
 	public boolean authentifier() {
 		int i = 0;
@@ -129,18 +128,21 @@ public class FeAu extends JFrame {
 			i++;
 		}
 		return verify;
-	}
-	private class BtnNewButtonActionListener implements ActionListener {
+	}//fin méthode
+	
+	
+	public class BtnNewButtonActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			boolean check = authentifier();
 			if (check == true) {
 				frameGestion = new FeGestion();
 				frameGestion.setVisible(true);
-				//frameAu.setVisible(false);
+				lbl_Status.setVisible(false);
+				frameAu.setVisible(false);
 			}else{
 				lbl_Status.setVisible(true);
 			}
 		}
-	}
+	}//fin méthode
 }

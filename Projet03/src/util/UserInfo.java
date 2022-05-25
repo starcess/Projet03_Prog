@@ -128,7 +128,14 @@ public class UserInfo {
 	/**
 	 * @param username the username to set
 	 */
-	public void setUsername(String[] username) {
+	public void setUsername(ArrayList<String> username) {
+		//this.username = username;
+		String path = "./Ressources/users.txt";
+		this.listeUsername = fichiertoUserName(path);
+	}
+	
+	
+	public void setUsername() {
 		//this.username = username;
 		String path = "./Ressources/users.txt";
 		this.listeUsername = fichiertoUserName(path);
@@ -147,7 +154,14 @@ public class UserInfo {
 	 * @param pwd the pwd to set
 	 * 
 	 */
-	public void setPwd(String[] pwd)  {
+	public void setPwd(ArrayList<String> pwd)  {
+		//this.pwd = pwd;
+		String path = "./Ressources/pwds.txt";
+		this.listePwd = fichiertoPwd(path);
+	}
+	
+	
+	public void setPwd()  {
 		//this.pwd = pwd;
 		String path = "./Ressources/pwds.txt";
 		this.listePwd = fichiertoPwd(path);
@@ -158,7 +172,9 @@ public class UserInfo {
 	 * 
 	 */
 	public UserInfo() {
-		}
+		setPwd();
+		setUsername();
+	}
 	
 
 }
