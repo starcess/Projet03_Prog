@@ -39,7 +39,8 @@ public class Bibliotheque {
 
 	/**
 	 * Supprimer un document: La suppression d'un document de la collection de
-	 * documents. 
+	 * documents.
+	 * 
 	 * @param code
 	 * @throws Exception
 	 */

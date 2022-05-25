@@ -7,24 +7,21 @@ package classes;
 import util.CodeGenerator;
 
 /**
- *  TODO
- * Author : Prénom, nom
+ * TODO Author : Prénom, nom
  */
-public class Livre extends Volume  {
+public class Livre extends Volume {
 	protected int annee;
 	protected Genre genre;
 	protected int nombreTotal;
 	protected int nombreDisponible;
-	
-	
+
 	@Override
 	public String toString() {
-		String msg = super.toString() + ",\t" + this.annee + ",\t" +
-					  this.genre + ",\t" + this.nombreDisponible + "/" + this.nombreTotal;
+		String msg = super.toString() + ",\t" + this.annee + ",\t" + this.genre + ",\t" + this.nombreDisponible + "/"
+				+ this.nombreTotal;
 		return msg;
 	}
-	
-	
+
 	/**
 	 * @return the annee
 	 */
@@ -81,20 +78,18 @@ public class Livre extends Volume  {
 		this.nombreDisponible = nombreDisponible;
 	}
 
-	//Constructor
+	// Constructor
 	public Livre() {
 		super();
 	}
-	
-	
-	public Livre(String code1, String categorie1, String titre1, String autheur1) {
-		super(code1, categorie1, titre1, autheur1);
+
+	public Livre(String code1, String categorie1, String titre1, String auteur1) {
+		super(code1, categorie1, titre1, auteur1);
 	}
-	
-	
-	public Livre(String code1, String categorie1, String titre1, String autheur1, int annee1, Genre g, int nbTotal) {		
-		this(code1, categorie1, titre1, autheur1);
-		super.code = CodeGenerator.generateLivreCode(titre, autheur, annee1, 5, 2);
+
+	public Livre(String code1, String categorie1, String titre1, String auteur1, int annee1, Genre g, int nbTotal) {
+		this(code1, categorie1, titre1, auteur1);
+		super.code = CodeGenerator.generateLivreCode(titre, auteur, annee1, 5, 2);
 		super.categorie = Categorie.LIVRE;
 		setAnnee(annee1);
 		setGenre(g);

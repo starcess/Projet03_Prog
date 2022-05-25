@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,7 +25,13 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import classes.BD;
 import classes.Bibliotheque;
+import classes.Categorie;
+import classes.Document;
+import classes.Genre;
+import classes.Journal;
+import classes.Livre;
 import util.Serialisation;
 
 /**
@@ -35,7 +42,7 @@ public class FeGestion extends JFrame {
 	private JPanel contentPane;
 	private JLabel lbl_Code;
 	private JLabel lbl_Titre;
-	private JLabel lbl_Autheur;
+	private JLabel lbl_Auteur;
 	private JLabel lbl_Annee;
 	private JLabel lbl_Nb_Copie;
 	private JLabel lbl_Date;
@@ -49,7 +56,7 @@ public class FeGestion extends JFrame {
 	private final ButtonGroup buttonGroupCategorie = new ButtonGroup();
 	private JComboBox cb_Genre;
 	private JTextField textField_Titre;
-	private JTextField textField_Autheur;
+	private JTextField textField_Auteur;
 	private JTextField textField_Annee;
 	private JTextField textField_NbCopies;
 	private JButton btn_Search;
@@ -111,11 +118,11 @@ public class FeGestion extends JFrame {
 		lbl_Titre.setBounds(10, 73, 88, 31);
 		contentPane.add(lbl_Titre);
 
-		lbl_Autheur = new JLabel("Autheur");
-		lbl_Autheur.setForeground(Color.WHITE);
-		lbl_Autheur.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lbl_Autheur.setBounds(10, 128, 88, 31);
-		contentPane.add(lbl_Autheur);
+		lbl_Auteur = new JLabel("Auteur");
+		lbl_Auteur.setForeground(Color.WHITE);
+		lbl_Auteur.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lbl_Auteur.setBounds(10, 128, 88, 31);
+		contentPane.add(lbl_Auteur);
 
 		lbl_Annee = new JLabel("Année");
 		lbl_Annee.setForeground(Color.WHITE);
@@ -173,6 +180,7 @@ public class FeGestion extends JFrame {
 		contentPane.add(rdbtn_BD);
 
 		cb_Genre = new JComboBox();
+		cb_Genre.setModel(new DefaultComboBoxModel(Genre.values()));
 		cb_Genre.setFont(new Font("Tahoma", Font.BOLD, 14));
 		cb_Genre.setBounds(235, 215, 114, 21);
 		contentPane.add(cb_Genre);
@@ -183,11 +191,11 @@ public class FeGestion extends JFrame {
 		contentPane.add(textField_Titre);
 		textField_Titre.setColumns(10);
 
-		textField_Autheur = new JTextField();
-		textField_Autheur.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_Autheur.setColumns(10);
-		textField_Autheur.setBounds(85, 134, 284, 19);
-		contentPane.add(textField_Autheur);
+		textField_Auteur = new JTextField();
+		textField_Auteur.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textField_Auteur.setColumns(10);
+		textField_Auteur.setBounds(85, 134, 284, 19);
+		contentPane.add(textField_Auteur);
 
 		textField_Annee = new JTextField();
 		textField_Annee.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -202,6 +210,7 @@ public class FeGestion extends JFrame {
 		contentPane.add(textField_NbCopies);
 
 		btn_Search = new JButton("");
+		btn_Search.addActionListener(new Btn_SearchActionListener());
 		btn_Search.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_1search.png")));
 		btn_Search.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Search.setBounds(383, 73, 30, 30);
@@ -235,6 +244,7 @@ public class FeGestion extends JFrame {
 		panel_Buttons.add(btn_Ajouter);
 
 		btn_Supprimer = new JButton("");
+		btn_Supprimer.addActionListener(new Btn_SupprimerActionListener());
 		btn_Supprimer.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_delete.jpg")));
 		btn_Supprimer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Supprimer.setBounds(92, 22, 50, 50);
@@ -248,6 +258,7 @@ public class FeGestion extends JFrame {
 		panel_Buttons.add(btn_Charger);
 
 		btn_Effacer = new JButton("");
+		btn_Effacer.addActionListener(new Btn_EffacerActionListener());
 		btn_Effacer.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_erase.png")));
 		btn_Effacer.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Effacer.setBounds(212, 22, 50, 50);
@@ -261,24 +272,43 @@ public class FeGestion extends JFrame {
 		panel_Buttons.add(btn_Lister);
 
 		btn_Quitter = new JButton("");
+		btn_Quitter.addActionListener(new Btn_QuitterActionListener());
 		btn_Quitter.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_quit_2.jpg")));
 		btn_Quitter.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btn_Quitter.setBounds(329, 22, 50, 50);
 		panel_Buttons.add(btn_Quitter);
 
-		lbl_Erreur = new JLabel("erreur");
+		lbl_Erreur = new JLabel("");
 		lbl_Erreur.setForeground(Color.RED);
 		lbl_Erreur.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_Erreur.setBounds(583, 221, 267, 31);
 		contentPane.add(lbl_Erreur);
+
+		btn_Emprunter = new JButton("");
+		btn_Emprunter.addActionListener(new Btn_EmprunterActionListener());
+		btn_Emprunter.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_Emprunter.setBounds(433, 237, 50, 50);
+		btn_Emprunter.setVisible(false);
+		contentPane.add(btn_Emprunter);
+
+		btn_Retourner = new JButton("");
+		btn_Retourner.addActionListener(new Btn_RetournerActionListener());
+		btn_Retourner.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_Retourner.setBounds(493, 236, 50, 50);
+		btn_Retourner.setVisible(false);
+		contentPane.add(btn_Retourner);
 	}
 
 	Bibliotheque biblio = new Bibliotheque();
+
+	private JButton btn_Emprunter;
+	private JButton btn_Retourner;
 
 	private void reset() {
 		rdbtn_Livre.setSelected(false);
 		rdbtn_BD.setSelected(false);
 		rdbtn_Journal.setSelected(false);
+		textArea.setText("");
 	}
 
 	// Chargement de la bibliotheque à partir d'un fichier texte et le bouton
@@ -300,15 +330,32 @@ public class FeGestion extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			reset();
 			String code = cb_Code.getSelectedItem().toString();
+
+			if (rdbtn_Livre.isSelected()) {
+				btn_Emprunter.setVisible(true);
+				btn_Retourner.setVisible(true);
+			}
+
 			try {
 				int position = biblio.rechercheCode(code);
+
+				// Affichage
 				textArea.setText(biblio.getDocument(position).toString());
-				System.out.println();
-				/*
-				 * switch (biblio.getDocument(position).getCategorie()) { case Categorie.LIVRE:
-				 * rdbtn_Livre.setSelected(true); case BD: rdbtn_BD.setSelected(true); case
-				 * JOURNAL: rdbtn_Journal.setSelected(true); }
-				 */
+				textField_Titre.setText(biblio.getDocument(position).getTitre());
+
+				System.out.println("categorie " + biblio.getDocument(position).getCategorie());
+
+				// Change le radio bouton pour correspondre à sa catégorie selon le code du
+				// document selectionné
+				if (biblio.getDocument(position).getCategorie().compareTo(Categorie.LIVRE) == 0) {
+					rdbtn_Livre.setSelected(true);
+				} else if (biblio.getDocument(position).getCategorie().compareTo(Categorie.BD) == 0) {
+					// textField_Auteur.setText(biblio.getDocument(position).getAuteur());
+					rdbtn_BD.setSelected(true);
+				} else if (biblio.getDocument(position).getCategorie().compareTo(Categorie.JOURNAL) == 0) {
+					// textField_Date.setText(biblio.getDocument(position).getDate());
+					rdbtn_Journal.setSelected(true);
+				}
 
 			} catch (Exception e1) {
 				lbl_Erreur.setText(e1.getMessage());
@@ -320,12 +367,124 @@ public class FeGestion extends JFrame {
 
 	private class Btn_AjouterActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			try {
+				String titre = textField_Titre.getText();
+				String auteur = textField_Auteur.getText();
+
+				// Si Livre selectionné
+				if (rdbtn_Livre.isSelected()) {
+					int annee = Integer.parseInt(textField_Annee.getText());
+					int nbCopies = Integer.parseInt(textField_NbCopies.getText());
+					Genre genre = Genre.ROMAN;
+
+					// Change la variable genre selon le radio bouton selectionné
+					if (cb_Genre.getSelectedItem().toString().equals("ROMAN")) {
+						genre = Genre.ROMAN;
+						System.out.println("Genre = Roman");
+					} else if (cb_Genre.getSelectedItem().toString().equals("FICTION")) {
+						genre = Genre.FICTION;
+						System.out.println("Genre = Fiction");
+					} else if (cb_Genre.getSelectedItem().toString().equals("TECHNIQUE")) {
+						genre = Genre.TECHNIQUE;
+						System.out.println("Genre = Technique");
+					}
+
+					biblio.ajouter(new Livre(null, null, titre, auteur, annee, genre, nbCopies));
+
+					// Si BD selectionné
+				} else if (rdbtn_BD.isSelected()) {
+					int numero = Integer.parseInt(textField_Numero.getText());
+					biblio.ajouter(new BD(null, null, titre, auteur, numero));
+
+					// si Journal selectionné
+				} else if (rdbtn_Journal.isSelected()) {
+					String date = textField_Date.getText();
+					biblio.ajouter(new Journal(null, null, titre, date));
+				}
+				// Ajoute le code du nouveau document à cb_Code
+				cb_Code.addItem(biblio.getDocument(biblio.getNbDocuments() - 1).getCode());
+			} catch (Exception e1) {
+				lbl_Erreur.setText(e1.getMessage());
+			}
 		}
 	}
 
+	// Trie et Affiche tous les documents de la bibliotheque
 	private class Btn_ListerActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			reset();
+			// biblio.trier();
+			for (int i = 0; i < biblio.getNbDocuments(); i++) {
+				textArea.append(biblio.getDocument(i).toString());
+			}
 		}
 	}
 
+	// Supprime un document
+	private class Btn_SupprimerActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			String code = cb_Code.getSelectedItem().toString();
+			System.out.println(code);
+			// biblio.suppression(code); Doesn't seem to work
+
+		}
+	}
+
+	// Bouton quitter
+	private class Btn_QuitterActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	}
+
+	// Efface tous les textes
+	private class Btn_EffacerActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			textField_Annee.setText("");
+			textField_Auteur.setText("");
+			textField_Date.setText("");
+			textField_NbCopies.setText("");
+			textField_Titre.setText("");
+			textField_Numero.setText("");
+			textArea.setText("");
+		}
+	}
+
+	// Recherche de document par titre
+	private class Btn_SearchActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				Document doc = biblio.getDocument(biblio.rechercheTitre(textField_Titre.getText()));
+				textArea.setText(doc.toString());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				lbl_Erreur.setText(e1.getMessage());
+			}
+		}
+	}
+
+	// Emprunte un livre si disponible sinon retourne un message d'erreur
+	private class Btn_EmprunterActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				biblio.emprunter(biblio.rechercheCode(cb_Code.getSelectedItem().toString()));
+				textArea.setText(
+						biblio.getDocument(biblio.rechercheCode(cb_Code.getSelectedItem().toString())).toString());
+			} catch (Exception e1) {
+				lbl_Erreur.setText(e1.getMessage());
+			}
+		}
+	}
+
+	private class Btn_RetournerActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				biblio.retourner(biblio.rechercheCode(cb_Code.getSelectedItem().toString()));
+				textArea.setText(
+						biblio.getDocument(biblio.rechercheCode(cb_Code.getSelectedItem().toString())).toString());
+			} catch (Exception e1) {
+				lbl_Erreur.setText(e1.getMessage());
+			}
+		}
+	}
 }

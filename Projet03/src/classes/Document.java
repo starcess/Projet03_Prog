@@ -7,32 +7,31 @@ package classes;
 import java.util.Objects;
 
 /**
- *  TODO
- * Author : Prénom, nom
+ * TODO Author : Prénom, nom
  */
-public class Document implements Comparable<Document>{
+public class Document implements Comparable<Document> {
 
 	protected String code;
 	protected Categorie categorie;
 	protected String titre;
 	protected static int nbDocument;
-	
-	//Methods
+
+	// Methods
 	@Override
 	public String toString() {
-		String msg = getClass().getSimpleName() + "\t" + " : " + "\t" +  this.code + "\t" + this.titre ;
+		String msg = "\n" + getClass().getSimpleName() + "\t" + " : " + "\t" + this.code + "\t" + this.titre;
 		return msg;
 	}
 
-	
-	//Compare, equals and hashcode
+	// Compare, equals and hashcode
 	@Override
 	public int compareTo(Document o) {
-		//int test = this.getClass().compareTo(o.getClass());
-		int result = (this.getClass().getSimpleName() + this.getCode()).compareTo(o.getClass().getSimpleName() + o.getCode());  
+		// int test = this.getClass().compareTo(o.getClass());
+		int result = (this.getClass().getSimpleName() + this.getCode())
+				.compareTo(o.getClass().getSimpleName() + o.getCode());
 		return result;
 	}
-		
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(categorie, code, titre);
@@ -53,9 +52,7 @@ public class Document implements Comparable<Document>{
 		return (categorie == other.categorie) && Objects.equals(code, other.code) && Objects.equals(titre, other.titre);
 	}
 
-
-	
-	//Getters, setters and Constructors
+	// Getters, setters and Constructors
 	/**
 	 * @return the code
 	 */
@@ -69,7 +66,7 @@ public class Document implements Comparable<Document>{
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	/**
 	 * @return the categorie
 	 */
@@ -83,7 +80,7 @@ public class Document implements Comparable<Document>{
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 	}
-	
+
 	/**
 	 * @return the titre
 	 */
@@ -104,14 +101,14 @@ public class Document implements Comparable<Document>{
 	public static int getNbDocument() {
 		return nbDocument;
 	}
-	
+
 	/**
 	 * 
 	 */
 	public Document() {
 		nbDocument++;
 	}
-	
+
 	/**
 	 * 
 	 * @param code1
@@ -124,8 +121,5 @@ public class Document implements Comparable<Document>{
 		setCategorie(categorie);
 		setCode(code1);
 	}
-	
-	
-	
-	
+
 }
