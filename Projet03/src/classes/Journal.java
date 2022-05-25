@@ -56,7 +56,6 @@ public class Journal extends Document{
 	public Journal(String code1, String categorie1, String titre1, String dateParution1) {
 		this(code1, categorie1, titre1);	
 		setDateParution(dateParution1);
-		//this.annee = String.valueOf(dateParution1.getYear());
 		LocalDate date = LocalDate.parse(this.dateParution);
 		this.annee = date.getYear();
 		super.code = CodeGenerator.generateJournalCode(titre, dateParution1, annee, 5,2);	

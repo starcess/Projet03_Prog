@@ -50,17 +50,18 @@ public class Test_Bibliothèque {
 			System.out.println("Livre trouvé par titre :\t"  + bibli.listeDocuments.get(position).toString());
 			bibli.emprunter(position);
 			System.out.println("Prêt :\t" + bibli.listeDocuments.get(position).toString());
-			position = bibli.rechercheCode("AC-4ABB6-47");
-			System.out.println("Livre trouvé par code :\t"  + bibli.listeDocuments.get(position).toString());
 			bibli.retourner(position);
-			System.out.println("Retour :\t"  + bibli.listeDocuments.get(position).toString());
+			System.out.println("Retour :\t"  + bibli.listeDocuments.get(position).toString()); 
+			position = bibli.rechercheCode("21-C65B6-25");
+			System.out.println(bibli.getListeDocuments().get(position).getClass().getSimpleName() + " trouvé par code :\t"  + bibli.listeDocuments.get(position).toString());
+			bibli.emprunter(position);
 		
 			System.out.println();
 			bibli.sauvegardeXml(bibli.listeDocuments, pathXml);
 			bibli.sauvegardeBinaire(bibli.listeDocuments, pathBinaire);
 			
 			System.out.println();
-			System.out.println(); 
+ 
 			
 			Bibliotheque bibli2 = new Bibliotheque("Deuxième bibliothèque");
 			bibli2.setFromListeDocuments(bibli2.chargementBinaire(pathBinaire)); 

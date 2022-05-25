@@ -24,7 +24,26 @@
    </object>
   </void>
   <void method="add">
-   <object class="classes.Livre" id="Livre0">
+   <object class="classes.Journal">
+    <void property="categorie">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>classes.Categorie</class>
+      <string>JOURNAL</string>
+     </object>
+    </void>
+    <void property="code">
+     <string>21-C65B6-25</string>
+    </void>
+    <void property="dateParution">
+     <string>2021-03-27</string>
+    </void>
+    <void property="titre">
+     <string>Le monde</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="classes.Livre">
     <void property="annee">
      <int>1942</int>
     </void>
@@ -56,9 +75,6 @@
      <string>L&apos;Etranger</string>
     </void>
    </object>
-  </void>
-  <void method="add">
-   <object idref="Livre0"/>
   </void>
   <void method="add">
    <object class="classes.Livre">

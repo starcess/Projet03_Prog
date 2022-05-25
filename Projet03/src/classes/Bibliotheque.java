@@ -45,13 +45,16 @@ public class Bibliotheque {
 	 * @throws Exception 
 	 */
 	public void suppression(String code) throws Exception{
-		int index;
-		for(Document o : listeDocuments) {
-			if(o.code.equalsIgnoreCase(code) && (o != null)) {
-				index = rechercheCode(code);
-				listeDocuments.remove(index);
-			}
+		String msg;
+		int index = rechercheCode(code); 
+		if(index > -1) {
+			listeDocuments.remove(index);
+		}else {
+			msg = "Livre non trouvé.";
+			System.out.println(msg);
 		}
+		
+		
 	}
 	
 	/**
@@ -123,14 +126,14 @@ public class Bibliotheque {
 			if(l.getNombreDisponible() > 0) {
 				nbDispo = l.getNombreTotal() - 1; 
 				l.setNombreDisponible(nbDispo);
-				listeDocuments.set(nbDispo, l);
+				this.listeDocuments.set(position, l);
 			}else {
 				msg = "Il ne reste plus de livre à prêter.";
-				throw new Exception(msg);
+				System.out.println(msg);
 			}	
 		}else {
-		msg = "Ce n'étais pas un livre ou position plus petit que 0 et plus grande que la taille de la liste des documents ";
-		throw new Exception(msg);
+		msg = this.listeDocuments.get(position).getClass().getSimpleName() + " : Emprunt non permis.";
+		System.out.println(msg);
 		}
 	}
 		
@@ -151,14 +154,14 @@ public class Bibliotheque {
 			if(l.getNombreDisponible() < l.getNombreTotal()) {
 				nbDispo = l.getNombreDisponible() + 1; 
 				l.setNombreDisponible(nbDispo);
-				listeDocuments.set(nbDispo, l);
+				listeDocuments.set(position, l);
 			}else {
 				msg = "Aucun livre avait été emprunté";
-				throw new Exception(msg);
+				System.out.println(msg);
 			}	
 		}else {
-			msg = "Ce n'étais pas un livre.";
-			throw new Exception(msg);
+			msg = this.listeDocuments.get(position).getClass().getSimpleName() + " : Retour non permis.";
+			System.out.println(msg);
 		}
 	}
 	
