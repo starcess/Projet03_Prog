@@ -9,6 +9,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.ButtonGroup;
@@ -25,8 +26,12 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import classes.BD;
 import classes.Bibliotheque;
 import classes.Document;
+import classes.Genre;
+import classes.Journal;
+import classes.Livre;
 
 /**
  *  TODO
@@ -44,12 +49,12 @@ public class FeGestion extends JFrame {
 	private JLabel lbl_Numero;
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
-	private JComboBox cb_Code;
+	private static JComboBox cb_Code;
 	private JRadioButton rdbtn_Livre;
 	private JRadioButton rdbtn_Journal;
 	private JRadioButton rdbtn_BD;
 	private final ButtonGroup buttonGroupCategorie = new ButtonGroup();
-	private JComboBox cb_Genre;
+	private static JComboBox cb_Genre;
 	private JTextField textField_Titre;
 	private JTextField textField_Autheur;
 	private JTextField textField_Annee;
@@ -60,15 +65,14 @@ public class FeGestion extends JFrame {
 	private JPanel panel_Buttons;
 	private JButton btn_Ajouter;
 	private JButton btn_Supprimer;
-	private JButton btn_Charger;
+	private JButton btn_Sauvegarder;
 	private JButton btn_Effacer;
 	private JButton btn_Lister;
 	private JButton btn_Quitter;
 	//My attributes
 	private FeAu frameAu;
 	private static Bibliotheque bibli;
-	private static String pathBinaireToObject;
-	private String pathOjectToBinaire;
+	private static String pathBinaire = "./Ressources/Liste_Binaire.bin";
 	
 
 	/**
@@ -245,12 +249,12 @@ public class FeGestion extends JFrame {
 		btn_Supprimer.setBounds(92, 22, 50, 50);
 		panel_Buttons.add(btn_Supprimer);
 		
-		btn_Charger = new JButton("");
-		btn_Charger.addActionListener(new Btn_ChargerActionListener());
-		btn_Charger.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_downlod.png")));
-		btn_Charger.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btn_Charger.setBounds(152, 22, 50, 50);
-		panel_Buttons.add(btn_Charger);
+		btn_Sauvegarder = new JButton("");
+		btn_Sauvegarder.addActionListener(new Btn_SauvegarderActionListener());
+		btn_Sauvegarder.setIcon(new ImageIcon(FeGestion.class.getResource("/images/rsz_downlod.png")));
+		btn_Sauvegarder.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_Sauvegarder.setBounds(152, 22, 50, 50);
+		panel_Buttons.add(btn_Sauvegarder);
 		
 		btn_Effacer = new JButton("");
 		btn_Effacer.addActionListener(new Btn_EffacerActionListener());
@@ -275,15 +279,65 @@ public class FeGestion extends JFrame {
 	
 	//Charger fichier Document
 	public static void chargerFichierBinaire() throws ClassNotFoundException, IOException {
-		bibli = new Bibliotheque ();
-		pathBinaireToObject = "./Ressources/objectToBinaire.bin";
-		bibli.setListeDocuments(bibli.chargementBinaire(pathBinaireToObject)); 
+		bibli = new Bibliotheque (); 
+		bibli.setFromListeDocuments(bibli.chargementBinaire(pathBinaire));
+		remplirCbCode();
+		remplirCbGenre();
+	}
+	
+	
+	//Charger ComboBox Code
+	public static void remplirCbCode() {
+		cb_Code.removeAllItems();
+		String code;
+		for(Document doc :  bibli.getListeDocuments()) {
+			code = doc.getCode();
+			cb_Code.addItem(code);
+		}
+	}
+	
+		
+	//Charger ComboBox Genre
+	public static void remplirCbGenre() {
+		cb_Genre.removeAllItems();
+		for(Genre g : Genre.values()) {
+			cb_Genre.addItem(g);
+		}
 	}
 	
 	
 	private class Btn_AjouterActionListener implements ActionListener {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {		
+			try {
+				String numEdition = textField_Numero.getText();
+				int numEdiInt = Integer.parseInt(numEdition);
+				String dateParution = textField_Date.getText();
+				String nbCopieTotal = textField_NbCopies.getText();
+				int nbCopieTotalInt = Integer.parseInt(nbCopieTotal);
+				String autheur = textField_Autheur.getText();
+				String titre = textField_Titre.getText();
+				String anneeString = textField_Annee.getText();
+				int anneeInt = Integer.parseInt(anneeString);
+				String g = (String) cb_Genre.getSelectedItem();
+				Genre genre = Genre.valueOf(g);
+				
+				if(rdbtn_BD.isSelected()) {
+						bibli.ajouter(new BD (null, null, titre , autheur, numEdiInt));
+				}else if(rdbtn_Journal.isSelected()) {
+						bibli.ajouter(new Journal (null, null, autheur, dateParution));
+				}else if(rdbtn_Livre.isSelected()) {
+					bibli.ajouter(new Livre (null, null, titre, autheur, anneeInt, genre, nbCopieTotalInt));
+				}
+				
+				remplirCbCode();
+				remplirCbGenre();
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 		}
 	}
 	
@@ -291,19 +345,30 @@ public class FeGestion extends JFrame {
 	private class Btn_SupprimerActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				String code = (String) cb_Code.getSelectedItem();
+				bibli.suppression(code);
+				remplirCbCode();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
 	
-	private class Btn_ChargerActionListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
+
 	
 	private class Btn_EffacerActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			textField_Annee.setText("");
+			textField_Autheur.setText("");
+			textField_Date.setText("");
+			textField_NbCopies.setText("");
+			textField_Numero.setText("");
+			textField_Titre.setText("");
+			
 		}
 	}
 	
@@ -317,9 +382,35 @@ public class FeGestion extends JFrame {
 		}
 	}
 	
+	
 	private class Btn_QuitterActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				bibli.sauvegardeBinaire(bibli.getListeDocuments(), pathBinaire);
+				System.exit(0);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	private class Btn_SauvegarderActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				bibli.sauvegardeBinaire(bibli.getListeDocuments(), pathBinaire);
+				bibli.sauvegardeXml(bibli.getListeDocuments(), pathBinaire);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
