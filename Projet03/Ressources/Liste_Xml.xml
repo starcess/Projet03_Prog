@@ -7,7 +7,7 @@
      <string>Edison</string>
     </void>
     <void property="categorie">
-     <object class="java.lang.Enum" method="valueOf">
+     <object class="java.lang.Enum" id="Categorie0" method="valueOf">
       <class>classes.Categorie</class>
       <string>BD</string>
      </object>
@@ -24,12 +24,47 @@
    </object>
   </void>
   <void method="add">
+   <object class="classes.BD">
+    <void property="autheur">
+     <string>George Remi</string>
+    </void>
+    <void property="categorie">
+     <object idref="Categorie0"/>
+    </void>
+    <void property="code">
+     <string>AF</string>
+    </void>
+    <void property="numEdition">
+     <int>20</int>
+    </void>
+    <void property="titre">
+     <string>Tintin et milou</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
    <object class="classes.Journal">
     <void property="categorie">
-     <object class="java.lang.Enum" method="valueOf">
+     <object class="java.lang.Enum" id="Categorie1" method="valueOf">
       <class>classes.Categorie</class>
       <string>JOURNAL</string>
      </object>
+    </void>
+    <void property="code">
+     <string>20-8F752-23</string>
+    </void>
+    <void property="dateParution">
+     <string>2020-06-28</string>
+    </void>
+    <void property="titre">
+     <string>Pigs will fly</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="classes.Journal">
+    <void property="categorie">
+     <object idref="Categorie1"/>
     </void>
     <void property="code">
      <string>21-C65B6-25</string>
@@ -51,7 +86,7 @@
      <string>Albert Camus</string>
     </void>
     <void property="categorie">
-     <object class="java.lang.Enum" id="Categorie0" method="valueOf">
+     <object class="java.lang.Enum" id="Categorie2" method="valueOf">
       <class>classes.Categorie</class>
       <string>LIVRE</string>
      </object>
@@ -66,7 +101,7 @@
      </object>
     </void>
     <void property="nombreDisponible">
-     <int>2</int>
+     <int>1</int>
     </void>
     <void property="nombreTotal">
      <int>2</int>
@@ -85,7 +120,7 @@
      <string>Arthur Golden</string>
     </void>
     <void property="categorie">
-     <object idref="Categorie0"/>
+     <object idref="Categorie2"/>
     </void>
     <void property="code">
      <string>AG-8AEFD-74</string>
@@ -113,7 +148,7 @@
      <string>Anne Rice</string>
     </void>
     <void property="categorie">
-     <object idref="Categorie0"/>
+     <object idref="Categorie2"/>
     </void>
     <void property="code">
      <string>AR-89AAB-3A</string>
@@ -141,7 +176,7 @@
      <string>Choderlos de Laclos</string>
     </void>
     <void property="categorie">
-     <object idref="Categorie0"/>
+     <object idref="Categorie2"/>
     </void>
     <void property="code">
      <string>CD-9BEDE-33</string>
@@ -169,7 +204,7 @@
      <string>Car S. Horstmann</string>
     </void>
     <void property="categorie">
-     <object idref="Categorie0"/>
+     <object idref="Categorie2"/>
     </void>
     <void property="code">
      <string>CS-B54A5-55</string>
@@ -200,7 +235,7 @@
      <string>John SteinBeck</string>
     </void>
     <void property="categorie">
-     <object idref="Categorie0"/>
+     <object idref="Categorie2"/>
     </void>
     <void property="code">
      <string>JS-7B3AB-77</string>
@@ -216,6 +251,37 @@
     </void>
     <void property="titre">
      <string>Of Mice and Men</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="classes.Livre">
+    <void property="annee">
+     <int>2018</int>
+    </void>
+    <void property="autheur">
+     <string>Rebecca</string>
+    </void>
+    <void property="categorie">
+     <object idref="Categorie2"/>
+    </void>
+    <void property="code">
+     <string>RE-EB788-9A</string>
+    </void>
+    <void property="genre">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>classes.Genre</class>
+      <string>FICTION</string>
+     </object>
+    </void>
+    <void property="nombreDisponible">
+     <int>4</int>
+    </void>
+    <void property="nombreTotal">
+     <int>4</int>
+    </void>
+    <void property="titre">
+     <string>Blueberry eyes</string>
     </void>
    </object>
   </void>

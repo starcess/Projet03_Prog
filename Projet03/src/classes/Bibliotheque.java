@@ -16,7 +16,7 @@ import util.Serialisation;
  */
 public class Bibliotheque {
 
-	protected String nomBibliotheque = "Bibliothèque Ahuntsic";
+	protected String nomBibliotheque = "bibliothèque Ahuntsic";
 	protected final int MAX = 500;
 	protected ArrayList <Document> listeDocuments;
 	
@@ -34,9 +34,10 @@ public class Bibliotheque {
 		if (Document.getNbDocument() <= MAX) {
 			listeDocuments.add(document);
 		}else {
-			throw new Exception("Il ne reste plus de place dans la bibliothèque " + this.nomBibliotheque);
+			throw new Exception("Il ne reste plus de place dans la " + this.nomBibliotheque);
 		}
 	}
+	
 	
 	/**
 	 * Supprimer un document: 
@@ -48,7 +49,10 @@ public class Bibliotheque {
 		String msg;
 		int index = rechercheCode(code); 
 		if(index > -1) {
-			listeDocuments.remove(index);
+			msg = "Supprimer : " + this.listeDocuments.get(index).toString();
+			System.out.println(msg);
+			this.listeDocuments.remove(index);
+			
 		}else {
 			msg = "Livre non trouvé.";
 			System.out.println(msg);
@@ -63,17 +67,18 @@ public class Bibliotheque {
 	 * @return
 	 * @throws Exception 
 	 */
-	public int rechercheCode(String code) throws Exception {
+	public int rechercheCode(String code1) throws Exception {
 		int pos = -1;
 		String msg;
-		if(code.isBlank() == false ) {
+		//System.out.println("Code : " + code1);
+		if(code1.isBlank() == false ) {
 			for(int i = 0; i < listeDocuments.size(); i++) {
-				if ((listeDocuments.get(i)!= null) && listeDocuments.get(i).code.equalsIgnoreCase(code)) {
+				if ((listeDocuments.get(i)!= null) && listeDocuments.get(i).getCode().equalsIgnoreCase(code1)) {
 					pos = i;
 				}
 			}
 		} else {
-			msg = "Code : [" + code + "], non trouvé.";
+			msg = "Code : [" + code1 + "], non trouvé.";
 			throw new Exception(msg);
 		}
 		return pos;
@@ -128,7 +133,7 @@ public class Bibliotheque {
 		if((listeDocuments.get(position) instanceof Livre) && (position > 0) && (position < this.listeDocuments.size())) {
 			l = (Livre) listeDocuments.get(position);
 			if(l.getNombreDisponible() > 0) {
-				nbDispo = l.getNombreTotal() - 1; 
+				nbDispo = l.getNombreDisponible() - 1; 
 				l.setNombreDisponible(nbDispo);
 				this.listeDocuments.set(position, l);
 				msg = "Prêt :\t" + this.listeDocuments.get(position).toString();
@@ -140,8 +145,10 @@ public class Bibliotheque {
 		}else {
 		msg = this.listeDocuments.get(position).getClass().getSimpleName() + " : Emprunt non permis.";
 		System.out.println(msg);
+		throw new Exception(msg);		
 		}
 	}
+	
 		
 	/**
 	 * Seuls les livres peuvent être empruntés.
@@ -161,15 +168,17 @@ public class Bibliotheque {
 				nbDispo = l.getNombreDisponible() + 1; 
 				l.setNombreDisponible(nbDispo);
 				listeDocuments.set(position, l);
-				msg = "Retour :\t" + this.listeDocuments.get(position).toString();
+				msg = "Retour :\t" + this.listeDocuments.get(position).toString() ;
 				System.out.println(msg);
 			}else {
-				msg = "Aucun livre avait été emprunté";
+				msg = "Aucun livre avait été emprunté \n" + this.listeDocuments.get(position).toString();
 				System.out.println(msg);
+				throw new Exception(msg);	
 			}	
 		}else {
 			msg = this.listeDocuments.get(position).getClass().getSimpleName() + " : Retour non permis.";
 			System.out.println(msg);
+			throw new Exception(msg);
 		}
 	}
 	

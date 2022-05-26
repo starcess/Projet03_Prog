@@ -49,6 +49,8 @@ public class Test_Bibliothèque {
 			position = bibli.rechercheTitre("L'Etranger");
 			System.out.println("Livre trouvé par titre :\t"  + bibli.listeDocuments.get(position).toString());
 			bibli.emprunter(position);
+			bibli.emprunter(position);
+			
 			bibli.retourner(position);
 			position = bibli.rechercheCode("21-C65B6-25");
 			System.out.println(bibli.getListeDocuments().get(position).getClass().getSimpleName() + " trouvé par code :\t"  + bibli.listeDocuments.get(position).toString());
@@ -64,7 +66,9 @@ public class Test_Bibliothèque {
 			Bibliotheque bibli2 = new Bibliotheque("Deuxième bibliothèque");
 			bibli2.setFromListeDocuments(bibli2.chargementBinaire(pathBinaire)); 
 			System.out.println(bibli2.getNomBibliotheque() + "\n" + bibli2.toString());
-			
+			String code = bibli2.obtention(2).getCode();
+			bibli2.suppression(code);
+			System.out.println(bibli2.getNomBibliotheque() + "\n" + bibli2.toString());
 			
 			//Bibliotheque bibli3 = new Bibliotheque("Troisième bibliothèque");
 			//bibli2.setFromListeDocuments(bibli3.chargementXml(pathBinaire)); 

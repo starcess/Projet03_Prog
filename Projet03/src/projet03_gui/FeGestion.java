@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -47,7 +48,7 @@ public class FeGestion extends JFrame {
 	private JLabel lbl_Nb_Copie;
 	private JLabel lbl_Date;
 	private JLabel lbl_Numero;
-	private JTextArea textArea;
+	private static JTextArea textArea;
 	private JScrollPane scrollPane;
 	private static JComboBox cb_Code;
 	private JRadioButton rdbtn_Livre;
@@ -71,7 +72,7 @@ public class FeGestion extends JFrame {
 	private JButton btn_Quitter;
 	//My attributes
 	private FeAu frameAu;
-	private static Bibliotheque bibli;
+	private static Bibliotheque bibli = new Bibliotheque ();
 	private static String pathBinaire = "./Ressources/Liste_Binaire.bin";
 	private static String pathXml = "./Ressources/Liste_Xml.xml";
 	private JLabel lbl_Erreur;
@@ -297,9 +298,60 @@ public class FeGestion extends JFrame {
 		
 		lbl_Erreur = new JLabel("Erreur");
 		lbl_Erreur.setForeground(Color.RED);
+		lbl_Erreur.setVisible(false);
 		lbl_Erreur.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_Erreur.setBounds(38, 249, 812, 31);
 		contentPane.add(lbl_Erreur);
+	}
+	
+	public void afficher(Bibliotheque bibli, int position) {
+		try {
+			//int position = bibli.rechercheCode(code);
+			if (position > -1) {
+				Document docTemp = bibli.getListeDocuments().get(position);
+				if(docTemp instanceof Livre) {
+					//public Livre(String code1, String categorie1, String titre1, String autheur1, int annee1, Genre g, int nbTotal)
+					Livre l = (Livre) docTemp;
+					rdbtn_Livre.setSelected(true);
+					textField_Titre.setText(l.getTitre());
+					textField_Autheur.setText(l.getAutheur());
+					textField_Annee.setText(String.valueOf(l.getAnnee()));
+					cb_Genre.setSelectedItem(l.getGenre());
+					textField_NbCopies.setText(String.valueOf(l.getNombreDisponible()));
+					textArea.setText(bibli.getListeDocuments().get(position).toString());
+					textField_Numero.setText(null);
+					textField_Date.setText(null);
+				}else if(docTemp instanceof BD) {
+					//public BD(String code1, String categorie1, String titre1, String autheur1, int numEdition1)
+					BD bd = (BD) docTemp;
+				    rdbtn_BD.setSelected(true);
+					textField_Titre.setText(bd.getTitre());
+					textField_Autheur.setText(bd.getAutheur());
+					textField_Annee.setText(null);
+					textField_NbCopies.setText(null);
+					textField_Numero.setText(String.valueOf(bd.getNumEdition()));
+					cb_Genre.setSelectedItem(Genre.NON_APPLICABLE);
+					textArea.setText(bibli.getListeDocuments().get(position).toString());
+					textField_Date.setText(null);
+				}else if(docTemp instanceof Journal) {
+					//public Journal(String code1, String categorie1, String titre1, String dateParution1)
+					Journal j = (Journal) docTemp;
+					rdbtn_Journal.setSelected(true);
+					textField_Titre.setText(j.getTitre());
+					textField_Date.setText(j.getDateParution());
+					textField_Annee.setText(null);
+					textField_Autheur.setText(null);
+					textField_Numero.setText(null);
+					textField_NbCopies.setText(null);
+					cb_Genre.setSelectedItem(Genre.NON_APPLICABLE);
+					textArea.setText(bibli.getListeDocuments().get(position).toString());
+				}
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 	
@@ -308,39 +360,8 @@ public class FeGestion extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				String code = (String) cb_Code.getSelectedItem();
-				int position = bibli.rechercheCode(code);
-				Document docTemp = bibli.getListeDocuments().get(position);
-				
-				if(docTemp instanceof Livre) {
-					//public Livre(String code1, String categorie1, String titre1, String autheur1, int annee1, Genre g, int nbTotal)
-					effacerTout();
-					Livre l = (Livre) docTemp;
-					rdbtn_Livre.setSelected(true);
-					textField_Titre.setText(l.getTitre());
-					textField_Autheur.setText(l.getAutheur());
-					textField_Annee.setText(String.valueOf(l.getAnnee()));
-					cb_Genre.setSelectedItem(l.getGenre());
-					textField_NbCopies.setText(String.valueOf(l.getNombreDisponible()));
-				}else if(docTemp instanceof BD) {
-					//public BD(String code1, String categorie1, String titre1, String autheur1, int numEdition1)
-					effacerTout();
-					BD bd = (BD) docTemp;
-				    rdbtn_BD.setSelected(true);
-					textField_Titre.setText(bd.getTitre());
-					textField_Autheur.setText(bd.getAutheur());
-					textField_Numero.setText(String.valueOf(bd.getNumEdition()));
-					cb_Genre.setSelectedItem(Genre.NON_APPLICABLE);
-				}else if(docTemp instanceof Journal) {
-					//public Journal(String code1, String categorie1, String titre1, String dateParution1)
-					effacerTout();
-					Journal j = (Journal) docTemp;
-					rdbtn_Journal.setSelected(true);
-					textField_Titre.setText(j.getTitre());
-					textField_Date.setText(j.getDateParution());
-					cb_Genre.setSelectedItem(Genre.NON_APPLICABLE);
-				}
-				
+				int pos = cb_Code.getSelectedIndex();
+				afficher(bibli, pos);				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -351,11 +372,12 @@ public class FeGestion extends JFrame {
 	
 	
 	//Remplir ComboBox Code
-	public static void remplirCbCode() {
+	public static void remplirCbCode(ArrayList <Document> listeDocs) {
 		cb_Code.removeAllItems();
 		String code;
-		for(Document doc :  bibli.getListeDocuments()) {
+		for(Document doc :  listeDocs) {
 			code = doc.getCode();
+			//System.out.println(code);
 			cb_Code.addItem(code);
 		}
 	}
@@ -371,10 +393,9 @@ public class FeGestion extends JFrame {
 	
 	
 	//Charger fichier Document
-		public static void chargerFichierBinaire() throws ClassNotFoundException, IOException {
-			bibli = new Bibliotheque (); 
+		public static void chargerFichierBinaire() throws ClassNotFoundException, IOException { 
 			bibli.setFromListeDocuments(bibli.chargementBinaire(pathBinaire));
-			remplirCbCode();
+			remplirCbCode(bibli.getListeDocuments());
 			remplirCbGenre();
 		}
 		
@@ -386,14 +407,15 @@ public class FeGestion extends JFrame {
 			textField_NbCopies.setText(null);
 			textField_Numero.setText(null);
 			textField_Titre.setText(null);
+			textArea.setText(null);
 			buttonGroupCategorie.clearSelection();
-			
 		}
 	
 	private class Btn_AjouterActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {		
 			try {
+				String code;
 				String numEdition = textField_Numero.getText();
 				int numEdiInt = -1;
 				String dateParution = textField_Date.getText();
@@ -404,28 +426,53 @@ public class FeGestion extends JFrame {
 				String anneeString = textField_Annee.getText();
 				int anneeInt = -1;
 				Genre genre = (Genre) cb_Genre.getSelectedItem();
-				if((numEdition != null) || (nbCopieTotal != null) || (anneeString != null)) {
-					numEdiInt = Integer.parseInt(numEdition);
-					nbCopieTotalInt = Integer.parseInt(nbCopieTotal);
-					anneeInt = Integer.parseInt(anneeString);
-					
+				Document doc;
+				if((numEdition != null) || (nbCopieTotal != null) || (anneeString != null)) {					
 					if(rdbtn_BD.isSelected()) {
-						bibli.ajouter(new BD (null, null, titre , autheur, numEdiInt));
+						numEdiInt = Integer.parseInt(numEdition);
+						//code = CodeGenerator.generateBDCode(titre, autheur, numEdiInt, 5, 2);
+						BD bd = new BD (null, null, titre , autheur, numEdiInt);
+						bibli.ajouter(bd);	
+						int pos = bibli.rechercheTitre(titre);
+						
+						textArea.setText(bibli.getListeDocuments().get(pos).toString());
+						bibli.setListeDocuments(bibli.trier(bibli.getListeDocuments()));
+						remplirCbCode(bibli.getListeDocuments());
+						cb_Code.setSelectedIndex(pos);
+						
 					}else if(rdbtn_Journal.isSelected()) {
-						bibli.ajouter(new Journal (null, null, autheur, dateParution));
-					}else if(rdbtn_Livre.isSelected()) {
-					bibli.ajouter(new Livre (null, null, titre, autheur, anneeInt, genre, nbCopieTotalInt));
-					}				
-					remplirCbCode();
-					remplirCbGenre();				
-				}
-				
-				
+						//LocalDate date = LocalDate.parse(dateParution);
+						//int annee = date.getYear();
+						//code = CodeGenerator.generateJournalCode(titre, dateParution, annee, 5, 2);
+						Journal j = new Journal (null, null, titre, dateParution);
+						bibli.ajouter(j);
+						int pos = bibli.rechercheTitre(titre);
+						
+						textArea.setText(bibli.getListeDocuments().get(pos).toString());
+						bibli.setListeDocuments(bibli.trier(bibli.getListeDocuments()));
+						remplirCbCode(bibli.getListeDocuments());
+						cb_Code.setSelectedIndex(pos);			
+					}else if(rdbtn_Livre.isSelected()) {	
+						nbCopieTotalInt = Integer.parseInt(nbCopieTotal);
+						anneeInt = Integer.parseInt(anneeString);
+						//code = CodeGenerator.generateLivreCode(titre, autheur, anneeInt, 5, 2);
+						Livre l  = new Livre (null, null, titre, autheur, anneeInt, genre, nbCopieTotalInt);				
+						bibli.ajouter(l);
+						int pos = bibli.rechercheTitre(titre);
+						
+						textArea.setText(bibli.getListeDocuments().get(pos).toString());
+						bibli.setListeDocuments(bibli.trier(bibli.getListeDocuments()));
+						remplirCbCode(bibli.getListeDocuments());
+						cb_Code.setSelectedIndex(pos);
+						
+					}else {
+						textArea.setText("Aucun document n'a été ajouté ou aucun bouton radio a été selectionné");
+					}
+				}//fin if((numEdition != null) || (nbCopieTotal != null) || (anneeString != null))	
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
-			
+			}	
 		}
 	}
 	
@@ -434,9 +481,12 @@ public class FeGestion extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				String code = (String) cb_Code.getSelectedItem();
-				bibli.suppression(code);
-				remplirCbCode();
+				//int pos = cb_Code.getSelectedIndex();	
+				String item = (String) cb_Code.getSelectedItem();
+				int pos = bibli.rechercheCode(item);
+				textArea.setText("Document supprimé : \n" + bibli.getListeDocuments().get(pos).toString());
+				bibli.getListeDocuments().remove(pos);
+				remplirCbCode(bibli.getListeDocuments());
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -444,8 +494,6 @@ public class FeGestion extends JFrame {
 		}
 	}
 	
-	
-
 	
 	private class Btn_EffacerActionListener implements ActionListener {
 		@Override
@@ -460,7 +508,7 @@ public class FeGestion extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			textArea.setText(bibli.getNomBibliotheque() + "\n");
 			textArea.append(bibli.toString() + "\n");
-			textArea.append("Capacité : " + Document.getNbDocument() + " documents");
+			textArea.append("Capacité : " + bibli.getListeDocuments().size() + " documents");
 		}
 	}
 	
@@ -497,16 +545,57 @@ public class FeGestion extends JFrame {
 	private class Btn_SearchActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				String titre = textField_Titre.getText();
+				String msg = "Document trouvé par titre : \n";
+				int pos;
+				if(titre.isBlank() != true) {
+					pos = bibli.rechercheTitre(titre);
+					if(pos > -1) {
+						cb_Code.setSelectedIndex(pos);
+						textArea.setText(msg + bibli.getListeDocuments().get(pos));
+					}else {
+						textArea.setText("Aucun Document trouvé.");
+					}
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
+	
+	
 	private class Btn_PreterActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				String msg = "Document prêté : \n";
+				int pos = cb_Code.getSelectedIndex();
+				bibli.emprunter(pos);
+				textArea.setText(msg + bibli.getListeDocuments().get(pos).toString());
+			} catch (Exception e1) {
+				String msg = e1.getLocalizedMessage();
+				//System.out.println(msg);
+				textArea.setText(msg);
+				e1.printStackTrace();
+			}
 		}
 	}
 	private class Btn_RetournerActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				String msg = "Document retourné : \n";
+				int pos = cb_Code.getSelectedIndex();
+				bibli.retourner(pos);
+				textArea.setText(msg + bibli.getListeDocuments().get(pos).toString());
+			} catch (Exception e1) {
+				String msg = e1.getLocalizedMessage();
+				//System.out.println(msg);
+				textArea.setText(msg);
+				e1.printStackTrace();
+			}
 		}
 	}
 }
