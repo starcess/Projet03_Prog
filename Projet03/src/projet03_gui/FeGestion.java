@@ -89,7 +89,7 @@ public class FeGestion extends JFrame {
 				try {
 					FeGestion frame = new FeGestion();
 					frame.setVisible(true);
-					chargerFichierBinaire();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -99,9 +99,12 @@ public class FeGestion extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public FeGestion() {
+	public FeGestion() throws ClassNotFoundException, IOException {		
 		initialize();
+		chargerFichierBinaire();
 	}
 	private void initialize() {
 		setTitle("Bibliothèque Ahuntsic");

@@ -9,6 +9,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -137,22 +138,25 @@ public class FeAu extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			/* 			 
-			authentifier();
-			FeGestion frame = new FeGestion();
-			dispose();
-			frame.setVisible(true);			 
-			 */
-			
-			boolean check = authentifier();
-			if (check == true) {
-				frameGestion = new FeGestion();
-				frameGestion.setVisible(true);
-				lbl_Status.setVisible(false);
-				dispose();
-				//frameAu.setVisible(false);
-			}else{
-				lbl_Status.setVisible(true);
+			//Nom utilisteur : Rebecca et Jackson
+			//Mot de pass : prog
+			try {
+				boolean check = authentifier();
+				if (check == true) {
+					frameGestion = new FeGestion();
+					frameGestion.setVisible(true);
+					lbl_Status.setVisible(false);
+					dispose();
+					//frameAu.setVisible(false);
+				}else{
+					lbl_Status.setVisible(true);
+				}
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}//fin méthode
